@@ -18,6 +18,7 @@ class Messenger(tk.Tk):
 
         tk.Tk.wm_title(self, "Messenger")
         self.geometry('800x600')
+        self.resizable(False, False)
 
         self.container = tk.Frame(self)
         self.container.pack(side="top", fill="both", expand=True)

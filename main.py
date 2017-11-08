@@ -81,7 +81,7 @@ class MainPage(tk.Frame):
 
         self.can_send = True
 
-        self.controller.bind("<Return>", lambda e: self.send_message(self.entry.get()))
+        self.controller.bind("<Return>", lambda e: self.send_message(self.entry.get("1.0", tk.END)))
 
         with open(FILE_PATH, 'r') as infile:
             self.data = json.load(infile)
@@ -91,7 +91,8 @@ class MainPage(tk.Frame):
         self.entry = tk.Text(self, width=50, height=2)
         self.entry.grid(row=1, column=0, columnspan=2, sticky="w", padx=10)
 
-        self.send_button = tk.Button(self, text="Send", command=lambda: self.send_message(self.entry.get()), width=10)
+        self.send_button = tk.Button(self, text="Send",
+                                     command=lambda: self.send_message(self.entry.get("1.0", tk.END)), width=10)
         self.send_button.grid(row=1, column=2, sticky="w")
 
         self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh, width=10)
@@ -100,7 +101,7 @@ class MainPage(tk.Frame):
         self.display = tk.Text(self, state="disabled", width=100)
         self.display.grid(row=4, column=0, columnspan=4, sticky="sw")
 
-        self.online_users = tk.Text(self, state="disabled")
+        self.online_users = tk.Text(self, state="disabled", height=20)
         self.online_users.grid(row=0, column=3, rowspan=4)
 
     def setup(self):
@@ -110,13 +111,13 @@ class MainPage(tk.Frame):
     def send_message(self, message):
 
         if message == "" or not self.can_send:
-            self.entry.delete(0, tk.END)
+            self.entry.delete("1.0", tk.END)
             return
 
         time = datetime.datetime.now().time()
 
         self.data["messages"].append("<{}:{}:{}> {}: {}".format(time.hour, time.minute, time.second,
-                                                                self.controller.username, message))
+                                                                self.controller.username, message.strip("\n")))
 
         if len(self.data["messages"]) > MESSAGE_THRESHOLD:
             self.data["messages"] = self.data["messages"][-MESSAGE_THRESHOLD:]
@@ -124,7 +125,7 @@ class MainPage(tk.Frame):
         with open(FILE_PATH, 'w') as outfile:
             json.dump(self.data, outfile)
 
-        self.entry.delete(0, tk.END)
+        self.entry.delete("1.0", tk.END)
 
         self.refresh()
 

@@ -57,6 +57,7 @@ class LoginPage(tk.Frame):
     def login(self):
 
         self.controller.username = self.name_entry.get()
+        self.controller.frames[MainPage].auto_refresh()
         self.controller.show_frame(MainPage)
 
 
@@ -99,6 +100,12 @@ class MainPage(tk.Frame):
 
         for message in data["messages"]:
             self.display.insert(tk.END, message + "\n")
+
+    def auto_refresh(self):
+
+        self.refresh()
+
+        self.controller.after(5000, self.auto_refresh)
 
 
 app = Messenger()

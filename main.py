@@ -86,17 +86,19 @@ class MainPage(tk.Frame):
         with open(FILE_PATH, 'r') as infile:
             self.data = json.load(infile)
 
-        self.entry = tk.Entry(self)
-        self.entry.grid(row=1, column=0, columnspan=2)
+        tk.Label(self, text="GHS Messenger", font=("Verdana", 12)).grid(row=0, column=0, columnspan=4, pady=10)
 
-        self.send_button = tk.Button(self, text="Send", command=lambda: self.send_message(self.entry.get()))
-        self.send_button.grid(row=2, column=2)
+        self.entry = tk.Entry(self, width=50)
+        self.entry.grid(row=1, column=0, columnspan=2, sticky="w")
 
-        self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh)
-        self.refresh_button.grid(row=2, column=2)
+        self.send_button = tk.Button(self, text="Send", command=lambda: self.send_message(self.entry.get()), width=10)
+        self.send_button.grid(row=1, column=2, sticky="w")
+
+        self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh, width=10)
+        self.refresh_button.grid(row=2, column=2, sticky="w")
 
         self.display = tk.Text(self, state="disabled", width=100)
-        self.display.grid(row=4, column=0, columnspan=4)
+        self.display.grid(row=4, column=0, columnspan=3)
 
     def setup(self):
 

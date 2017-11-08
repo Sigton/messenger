@@ -108,7 +108,7 @@ class MainPage(tk.Frame):
 
         self.error_message = tk.Label(self, text="",
                                       font=MEDIUM_FONT, fg=ERROR_COLOUR)
-        self.error_message.grid(row=3, column=0, sticky="n")
+        self.error_message.grid(row=3, column=0, sticky="w", padx=20)
 
         self.entry = tk.Text(self, width=50, height=2, bg=DARK_BACKGROUND_COLOUR, font=TEXTBOX_FONT)
         self.entry.grid(row=1, column=0, columnspan=2, rowspan=2, sticky="w", padx=10, ipady=30)
@@ -146,7 +146,9 @@ class MainPage(tk.Frame):
             return
 
         if len(message) > MESSAGE_LENGTH_THRESHOLD:
-            self.error_message.config(text="Message is too long!")
+            self.error_message.config(
+                text="Message is too long! Max of {} characters.".format(MESSAGE_LENGTH_THRESHOLD)
+            )
             self.entry.delete("1.0", tk.END)
 
             self.can_send = False

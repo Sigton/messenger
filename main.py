@@ -67,9 +67,12 @@ class LoginPage(tk.Frame):
 
     def login(self):
 
-        self.controller.username = self.name_entry.get()
-        self.controller.frames[MainPage].auto_refresh()
-        self.controller.show_frame(MainPage)
+        name = self.name_entry.get()
+
+        if 2 < len(name) < 13:
+            self.controller.username = self.name_entry.get()
+            self.controller.frames[MainPage].auto_refresh()
+            self.controller.show_frame(MainPage)
 
     def setup(self):
 

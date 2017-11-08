@@ -101,7 +101,7 @@ class MainPage(tk.Frame):
         self.display = tk.Text(self, state="disabled", width=100)
         self.display.grid(row=4, column=0, columnspan=4, sticky="sw")
 
-        self.online_users = tk.Text(self, state="disabled", height=20)
+        self.online_users = tk.Text(self, state="disabled", height=15)
         self.online_users.grid(row=0, column=3, rowspan=4)
 
     def setup(self):
@@ -110,7 +110,7 @@ class MainPage(tk.Frame):
 
     def send_message(self, message):
 
-        if message == "" or not self.can_send:
+        if message.strip("\n") == "" or not self.can_send:
             self.entry.delete("1.0", tk.END)
             return
 

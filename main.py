@@ -129,7 +129,6 @@ class MainPage(tk.Frame):
     def send_message(self, message):
 
         if message.strip("\n") == "" or not self.can_send:
-            self.entry.delete("1.0", tk.END)
             return
 
         time = datetime.datetime.now().time()

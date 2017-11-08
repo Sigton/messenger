@@ -133,8 +133,15 @@ class MainPage(tk.Frame):
             return
 
         time = datetime.datetime.now().time()
+        hours, minutes, seconds = str(time.hour), str(time.minute), str(time.second)
+        if len(hours) == 1:
+            hours = "0" + hours
+        if len(minutes) == 1:
+            minutes = "0" + minutes
+        if len(seconds) == 1:
+            seconds = "0" + seconds
 
-        self.data["messages"].append("<{}:{}:{}> {}: {}".format(time.hour, time.minute, time.second,
+        self.data["messages"].append("<{}:{}:{}> {}: {}".format(hours, minutes, seconds,
                                                                 self.controller.username, message.strip("\n")))
 
         if len(self.data["messages"]) > MESSAGE_THRESHOLD:

@@ -5,7 +5,7 @@ from settings import *
 
 name = input("Enter your username: ")
 
-with open("//H023FILESRV01/OldPupilSHare/messages.json", 'r') as infile:
+with open(FILE_PATH, 'r') as infile:
     data = json.load(infile)
 
 
@@ -15,7 +15,7 @@ def send_message(message):
 
     data["messages"].append("{}: {}".format(name, message))
 
-    with open("//H023FILESRV01/OldPupilSHare/messages.json", 'w') as outfile:
+    with open(FILE_PATH, 'w') as outfile:
         json.dump(data, outfile)
 
     refresh()
@@ -25,7 +25,7 @@ def refresh():
 
     global data, display
 
-    with open("//H023FILESRV01/OldPupilSHare/messages.json", 'r') as infile:
+    with open(FILE_PATH, 'r') as infile:
         data = json.load(infile)
 
     display.delete('1.0', tk.END)

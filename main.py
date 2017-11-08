@@ -50,10 +50,11 @@ class LoginPage(tk.Frame):
         self.parent = parent
         self.controller = controller
 
-        tk.Label(self, text="Enter your nickname:").grid(row=0, column=0, sticky="w", padx=10, pady=10)
+        tk.Label(self, text="Login to GHS Messenger", font=("Verdana", 12)).grid(row=0, column=0, columnspan=2, pady=10)
+        tk.Label(self, text="Enter your nickname:").grid(row=1, column=0, sticky="w", padx=10, pady=30)
 
         self.name_entry = tk.Entry(self)
-        self.name_entry.grid(row=0, column=1)
+        self.name_entry.grid(row=1, column=1)
 
         self.enter_button = tk.Button(self, text="Login", command=self.login, width=25)
         self.enter_button.grid(row=2, column=0, columnspan=2)
@@ -66,7 +67,7 @@ class LoginPage(tk.Frame):
 
     def setup(self):
 
-        self.controller.geometry('400x400')
+        self.controller.geometry('280x180')
 
 
 class MainPage(tk.Frame):

@@ -54,12 +54,14 @@ class LoginPage(tk.Frame):
         self.controller = controller
 
         tk.Label(self, text="Login to GHS Messenger", font=HEADING_FONT).grid(row=0, column=0, columnspan=2, pady=10)
-        tk.Label(self, text="Enter your nickname:").grid(row=1, column=0, sticky="w", padx=10, pady=30)
+        tk.Label(self, text="Enter your nickname:",
+                 font=TEXTBOX_FONT).grid(row=1, column=0, sticky="w", padx=10, pady=30)
 
-        self.name_entry = tk.Entry(self, bg=BACKGROUND_COLOUR)
+        self.name_entry = tk.Entry(self, bg=BACKGROUND_COLOUR, font=TEXTBOX_FONT)
         self.name_entry.grid(row=1, column=1)
 
-        self.enter_button = tk.Button(self, text="Login", command=self.login, width=25, bg=BUTTON_COLOUR)
+        self.enter_button = tk.Button(self, text="Login", command=self.login, width=25,
+                                      bg=BUTTON_COLOUR, font=BUTTON_FONT)
         self.enter_button.grid(row=2, column=0, columnspan=2)
 
     def login(self):
@@ -70,7 +72,7 @@ class LoginPage(tk.Frame):
 
     def setup(self):
 
-        self.controller.geometry('280x180')
+        self.controller.geometry('300x180')
 
 
 class MainPage(tk.Frame):
@@ -92,21 +94,22 @@ class MainPage(tk.Frame):
         tk.Label(self, text="GHS Messenger", font=HEADING_FONT).grid(row=0, column=0, columnspan=3,
                                                                      pady=10, padx=20, sticky="nw")
 
-        self.entry = tk.Text(self, width=50, height=2, bg=TEXTBOX_COLOUR)
+        self.entry = tk.Text(self, width=50, height=2, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
         self.entry.grid(row=1, column=0, columnspan=2, rowspan=2, sticky="w", padx=10, ipady=30)
 
         self.send_button = tk.Button(self, text="Send",
                                      command=lambda: self.send_message(self.entry.get("1.0", tk.END)),
-                                     width=10, bg=BUTTON_COLOUR)
+                                     width=10, bg=BUTTON_COLOUR, font=BUTTON_FONT)
         self.send_button.grid(row=1, column=2, sticky="w", ipady=10, padx=5)
 
-        self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh, width=10, bg=BUTTON_COLOUR)
+        self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh,
+                                        width=10, bg=BUTTON_COLOUR, font=BUTTON_FONT)
         self.refresh_button.grid(row=2, column=2, sticky="w", ipady=10, padx=5)
 
-        self.display = tk.Text(self, state="disabled", width=100, height=25, bg=TEXTBOX_COLOUR)
-        self.display.grid(row=5, column=0, columnspan=4, sticky="sw")
+        self.display = tk.Text(self, state="disabled", width=100, height=25, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
+        self.display.grid(row=5, column=0, columnspan=4, sticky="nsew")
 
-        self.online_users = tk.Text(self, state="disabled", height=12, bg=TEXTBOX_COLOUR)
+        self.online_users = tk.Text(self, state="disabled", height=12, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
         self.online_users.grid(row=0, column=3, rowspan=5)
 
     def setup(self):

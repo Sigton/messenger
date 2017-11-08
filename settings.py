@@ -12,3 +12,5 @@ BUTTON_COLOUR = "#4e5d94"
 
 # Fonts
 HEADING_FONT = ("Verdana", 14)
+BUTTON_FONT = ("Verdana", 10)
+TEXTBOX_FONT = ("Verdana", 8)

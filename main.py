@@ -3,12 +3,7 @@ import json
 
 from settings import *
 
-'''
 name = input("Enter your username: ")
-
-with open(FILE_PATH, 'r') as infile:
-    data = json.load(infile)
-'''
 
 
 class Messenger(tk.Tk):
@@ -53,39 +48,33 @@ class MainPage(tk.Frame):
         self.parent = parent
         self.controller = controller
 
-def send_message(message):
+        with open(FILE_PATH, 'r') as infile:
+            self.data = json.load(infile)
 
-    global data, name
+        entry = tk.Entry(self)
+        entry.pack()
+        send_button = tk.Button(self, text="Send", command=lambda: self.send_message(entry.get()))
+        send_button.pack()
+        refresh_button = tk.Button(self, text="Refresh", command=self.refresh)
+        refresh_button.pack()
+        display = tk.Text(self)
+        display.pack()
 
-    data["messages"].append("{}: {}".format(name, message))
+    def send_message(self, message):
 
-    with open(FILE_PATH, 'w') as outfile:
-        json.dump(data, outfile)
+        self.data["messages"].append("{}: {}".format(name, message))
 
-    refresh()
+        with open(FILE_PATH, 'w') as outfile:
+            json.dump(self.data, outfile)
 
+        self.refresh()
 
-def refresh():
+    def refresh(self):
 
-    global data, display
+        with open(FILE_PATH, 'r') as infile:
+            data = json.load(infile)
 
-    with open(FILE_PATH, 'r') as infile:
-        data = json.load(infile)
+        self.display.delete('1.0', tk.END)
 
-    display.delete('1.0', tk.END)
-
-    for message in data["messages"]:
-        display.insert(tk.END, message + "\n")
-
-
-root = tk.Tk()
-entry = tk.Entry(root)
-entry.pack()
-send_button = tk.Button(root, text="Send", command=lambda: send_message(entry.get()))
-send_button.pack()
-refresh_button = tk.Button(root, text="Refresh", command=refresh)
-refresh_button.pack()
-display = tk.Text(root)
-display.pack()
-
-root.mainloop()
+        for message in data["messages"]:
+            self.display.insert(tk.END, message + "\n")

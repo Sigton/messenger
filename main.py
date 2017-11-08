@@ -91,20 +91,21 @@ class MainPage(tk.Frame):
 
         tk.Label(self, text="GHS Messenger", font=("Verdana", 16)).grid(row=0, column=0, columnspan=3, pady=10)
 
-        self.entry = tk.Text(self, width=50, height=2)
+        self.entry = tk.Text(self, width=50, height=2, bg="#36393f")
         self.entry.grid(row=1, column=0, columnspan=2, rowspan=2, sticky="w", padx=10, ipady=30)
 
         self.send_button = tk.Button(self, text="Send",
-                                     command=lambda: self.send_message(self.entry.get("1.0", tk.END)), width=10)
-        self.send_button.grid(row=1, column=2, sticky="w", ipady=10)
+                                     command=lambda: self.send_message(self.entry.get("1.0", tk.END)),
+                                     width=10, bg="#435180")
+        self.send_button.grid(row=1, column=2, sticky="w", ipady=10, padx=5)
 
-        self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh, width=10)
-        self.refresh_button.grid(row=2, column=2, sticky="w", ipady=10)
+        self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh, width=10, bg="#435180")
+        self.refresh_button.grid(row=2, column=2, sticky="w", ipady=10, padx=5)
 
-        self.display = tk.Text(self, state="disabled", width=100, height=25)
+        self.display = tk.Text(self, state="disabled", width=100, height=25, bg="#2f3136")
         self.display.grid(row=5, column=0, columnspan=4, sticky="sw")
 
-        self.online_users = tk.Text(self, state="disabled", height=12)
+        self.online_users = tk.Text(self, state="disabled", height=12, bg="#2f3136")
         self.online_users.grid(row=0, column=3, rowspan=5)
 
     def setup(self):

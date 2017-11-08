@@ -86,6 +86,9 @@ class MainPage(tk.Frame):
 
         self.data["messages"].append("{}: {}".format(self.controller.username, message))
 
+        if len(self.data["messages"]) > MESSAGE_THRESHOLD:
+            self.data["messages"] = self.data["messages"][-MESSAGE_THRESHOLD:]
+
         with open(FILE_PATH, 'w') as outfile:
             json.dump(self.data, outfile)
 

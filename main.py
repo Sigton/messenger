@@ -3,14 +3,14 @@ import json
 
 from settings import *
 
-name = input("Enter your username: ")
-
 
 class Messenger(tk.Tk):
 
     def __init__(self, *args, **kwargs):
 
         tk.Tk.__init__(self, *args, **kwargs)
+
+        self.username = ""
 
         tk.Tk.wm_title(self, "Messenger")
         self.geometry('800x600')
@@ -23,7 +23,7 @@ class Messenger(tk.Tk):
 
         self.frames = {}
 
-        for f in (MainPage,):
+        for f in (MainPage, LoginPage):
 
             frame = f(self.container, self)
 
@@ -31,12 +31,33 @@ class Messenger(tk.Tk):
 
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame(MainPage)
+        self.show_frame(LoginPage)
 
     def show_frame(self, cont):
 
         frame = self.frames[cont]
         frame.tkraise()
+
+
+class LoginPage(tk.Frame):
+
+    def __init__(self, parent, controller):
+
+        tk.Frame.__init__(self, parent)
+
+        self.parent = parent
+        self.controller = controller
+
+        self.name_entry = tk.Entry(self)
+        self.name_entry.pack()
+
+        self.enter_button = tk.Button(self, text="Login", command=self.login)
+        self.enter_button.pack()
+
+    def login(self):
+
+        self.controller.username = self.name_entry.get()
+        self.controller.show_frame(MainPage)
 
 
 class MainPage(tk.Frame):

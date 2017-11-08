@@ -86,6 +86,9 @@ class MainPage(tk.Frame):
 
     def send_message(self, message):
 
+        if message == "":
+            return
+
         self.data["messages"].append("{}: {}".format(self.controller.username, message))
 
         if len(self.data["messages"]) > MESSAGE_THRESHOLD:

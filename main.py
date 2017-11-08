@@ -58,7 +58,7 @@ class LoginPage(tk.Frame):
         tk.Label(self, text="Enter your nickname:",
                  font=TEXTBOX_FONT).grid(row=1, column=0, sticky="w", padx=10, pady=30)
 
-        self.name_entry = tk.Entry(self, bg=BACKGROUND_COLOUR, font=TEXTBOX_FONT)
+        self.name_entry = tk.Entry(self, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
         self.name_entry.grid(row=1, column=1)
 
         self.enter_button = tk.Button(self, text="Login", command=self.login, width=25,

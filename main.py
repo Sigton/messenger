@@ -69,6 +69,8 @@ class MainPage(tk.Frame):
         self.parent = parent
         self.controller = controller
 
+        self.username = self.controller.username
+
         with open(FILE_PATH, 'r') as infile:
             self.data = json.load(infile)
 
@@ -83,7 +85,7 @@ class MainPage(tk.Frame):
 
     def send_message(self, message):
 
-        self.data["messages"].append("{}: {}".format(name, message))
+        self.data["messages"].append("{}: {}".format(self.username, message))
 
         with open(FILE_PATH, 'w') as outfile:
             json.dump(self.data, outfile)

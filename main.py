@@ -104,7 +104,7 @@ class MainPage(tk.Frame):
                                       font=MEDIUM_FONT, fg=ERROR_COLOUR)
         self.error_message.grid(row=3, column=0, sticky="n")
 
-        self.entry = tk.Text(self, width=50, height=2, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
+        self.entry = tk.Text(self, width=50, height=2, bg=DARK_BACKGROUND_COLOUR, font=TEXTBOX_FONT)
         self.entry.grid(row=1, column=0, columnspan=2, rowspan=2, sticky="w", padx=10, ipady=30)
 
         self.send_button = tk.Button(self, text="Send",

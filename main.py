@@ -87,14 +87,16 @@ class MainPage(tk.Frame):
             self.data = json.load(infile)
 
         self.entry = tk.Entry(self)
-        self.entry.pack()
+        self.entry.grid(row=1, column=0, columnspan=2)
+
         self.send_button = tk.Button(self, text="Send", command=lambda: self.send_message(self.entry.get()))
-        self.send_button.pack()
+        self.send_button.grid(row=2, column=2)
+
         self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh)
-        self.refresh_button.pack()
-        self.display = tk.Text(self)
-        self.display.config(state="disabled")
-        self.display.pack()
+        self.refresh_button.grid(row=2, column=2)
+
+        self.display = tk.Text(self, state="disabled", width=100)
+        self.display.grid(row=4, column=0, columnspan=4)
 
     def setup(self):
 

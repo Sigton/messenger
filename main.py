@@ -83,6 +83,7 @@ class MainPage(tk.Frame):
         self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh)
         self.refresh_button.pack()
         self.display = tk.Text(self)
+        self.display.config(state="disabled")
         self.display.pack()
 
     def send_message(self, message):
@@ -110,10 +111,13 @@ class MainPage(tk.Frame):
         with open(FILE_PATH, 'r') as infile:
             data = json.load(infile)
 
+        self.display.config(state="normal")
         self.display.delete('1.0', tk.END)
 
         for message in data["messages"]:
             self.display.insert(tk.END, message + "\n")
+
+        self.display.config(state="disabled")
 
     def auto_refresh(self):
 

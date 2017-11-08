@@ -96,10 +96,10 @@ class MainPage(tk.Frame):
 
         self.send_button = tk.Button(self, text="Send",
                                      command=lambda: self.send_message(self.entry.get("1.0", tk.END)),
-                                     width=10, bg="#435180")
+                                     width=10, bg="#4e5d94")
         self.send_button.grid(row=1, column=2, sticky="w", ipady=10, padx=5)
 
-        self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh, width=10, bg="#435180")
+        self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh, width=10, bg="#4e5d94")
         self.refresh_button.grid(row=2, column=2, sticky="w", ipady=10, padx=5)
 
         self.display = tk.Text(self, state="disabled", width=100, height=25, bg="#2f3136")

@@ -137,8 +137,11 @@ class MainPage(tk.Frame):
 
         if len(message) > MESSAGE_LENGTH_THRESHOLD:
             self.error_message.config(text="Message is too long!")
+            self.entry.delete("1.0", tk.END)
+
             self.can_send = False
             self.controller.after(2000, self.allow_message)
+
             return
 
         time = datetime.datetime.now().time()

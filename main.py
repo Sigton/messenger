@@ -104,7 +104,9 @@ class MainPage(tk.Frame):
                                          pady=10, padx=20, sticky="nw")
         tk.Label(self, text="Online Users:",
                  font=HEADING_FONT).grid(row=0, column=3,
-                                         pady=10, padx=10, sticky="nw")
+                                         pady=10, sticky="nw")
+        tk.Label(self, text="By Jamie",
+                 font=MEDIUM_FONT, fg=DARK_TEXT_COLOUR).grid(row=6, column=0, sticky="sw", pady=20, padx=20)
 
         self.error_message = tk.Label(self, text="",
                                       font=MEDIUM_FONT, fg=ERROR_COLOUR)

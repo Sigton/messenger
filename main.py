@@ -71,7 +71,6 @@ class LoginPage(tk.Frame):
 
         if 2 < len(name) < 13:
             self.controller.username = self.name_entry.get()
-            self.controller.frames[MainPage].auto_refresh()
             self.controller.show_frame(MainPage)
 
     def setup(self):
@@ -133,6 +132,8 @@ class MainPage(tk.Frame):
         self.set_online()
         self.controller.protocol("WM_DELETE_WINDOW", self.logoff)
 
+        self.auto_refresh()
+
     def send_message(self, message):
 
         if message.strip("\n") == "" or not self.can_send:
@@ -186,6 +187,14 @@ class MainPage(tk.Frame):
             self.display.insert(tk.END, message + "\n")
 
         self.display.config(state="disabled")
+
+        self.online_users.config(state="normal")
+        self.online_users.delete('1.0', tk.END)
+
+        for user in self.data["online"]:
+            self.online_users.insert(tk.END, user + "\n")
+
+        self.online_users.config(state="disabled")
 
     def set_online(self):
 

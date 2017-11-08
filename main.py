@@ -98,10 +98,10 @@ class MainPage(tk.Frame):
         self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh, width=10)
         self.refresh_button.grid(row=2, column=2, sticky="w")
 
-        self.display = tk.Text(self, state="disabled", width=100)
+        self.display = tk.Text(self, state="disabled", width=100, height=25)
         self.display.grid(row=4, column=0, columnspan=4, sticky="sw")
 
-        self.online_users = tk.Text(self, state="disabled", height=15)
+        self.online_users = tk.Text(self, state="disabled", height=12)
         self.online_users.grid(row=0, column=3, rowspan=4)
 
     def setup(self):

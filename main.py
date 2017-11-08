@@ -51,14 +51,14 @@ class MainPage(tk.Frame):
         with open(FILE_PATH, 'r') as infile:
             self.data = json.load(infile)
 
-        entry = tk.Entry(self)
-        entry.pack()
-        send_button = tk.Button(self, text="Send", command=lambda: self.send_message(entry.get()))
-        send_button.pack()
-        refresh_button = tk.Button(self, text="Refresh", command=self.refresh)
-        refresh_button.pack()
-        display = tk.Text(self)
-        display.pack()
+        self.entry = tk.Entry(self)
+        self.entry.pack()
+        self.send_button = tk.Button(self, text="Send", command=lambda: self.send_message(entry.get()))
+        self.send_button.pack()
+        self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh)
+        self.refresh_button.pack()
+        self.display = tk.Text(self)
+        self.display.pack()
 
     def send_message(self, message):
 

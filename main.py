@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import ttk
+
 import json
 import datetime
 
@@ -50,13 +52,13 @@ class LoginPage(tk.Frame):
         self.parent = parent
         self.controller = controller
 
-        tk.Label(self, text="Login to GHS Messenger", font=("Verdana", 12)).grid(row=0, column=0, columnspan=2, pady=10)
-        tk.Label(self, text="Enter your nickname:").grid(row=1, column=0, sticky="w", padx=10, pady=30)
+        ttk.Label(self, text="Login to GHS Messenger", font=("Verdana", 12)).grid(row=0, column=0, columnspan=2, pady=10)
+        ttk.Label(self, text="Enter your nickname:").grid(row=1, column=0, sticky="w", padx=10, pady=30)
 
-        self.name_entry = tk.Entry(self)
+        self.name_entry = ttk.Entry(self)
         self.name_entry.grid(row=1, column=1)
 
-        self.enter_button = tk.Button(self, text="Login", command=self.login, width=25)
+        self.enter_button = ttk.Button(self, text="Login", command=self.login, width=25)
         self.enter_button.grid(row=2, column=0, columnspan=2)
 
     def login(self):
@@ -86,16 +88,16 @@ class MainPage(tk.Frame):
         with open(FILE_PATH, 'r') as infile:
             self.data = json.load(infile)
 
-        tk.Label(self, text="GHS Messenger", font=("Verdana", 12)).grid(row=0, column=0, columnspan=3, pady=10)
+        ttk.Label(self, text="GHS Messenger", font=("Verdana", 12)).grid(row=0, column=0, columnspan=3, pady=10)
 
-        self.entry = tk.Text(self, width=50, height=2)
+        self.entry = tk.Text(self, width=50, height=2, bg="#BBB")
         self.entry.grid(row=1, column=0, columnspan=2, rowspan=2, sticky="w", padx=10, ipady=30)
 
-        self.send_button = tk.Button(self, text="Send",
-                                     command=lambda: self.send_message(self.entry.get("1.0", tk.END)), width=10)
+        self.send_button = ttk.Button(self, text="Send",
+                                      command=lambda: self.send_message(self.entry.get("1.0", tk.END)), width=10)
         self.send_button.grid(row=1, column=2, sticky="w", ipady=10)
 
-        self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh, width=10)
+        self.refresh_button = ttk.Button(self, text="Refresh", command=self.refresh, width=10)
         self.refresh_button.grid(row=2, column=2, sticky="w", ipady=10)
 
         self.display = tk.Text(self, state="disabled", width=100, height=25)

@@ -101,8 +101,9 @@ class MainPage(tk.Frame):
                  font=HEADING_FONT).grid(row=0, column=3,
                                          pady=10, padx=10, sticky="nw")
 
-        self.error_message = tk.Label(self, text="This is an error message!",
-                                      font=MEDIUM_FONT, fg=ERROR_COLOUR).grid(row=3, column=0, sticky="n")
+        self.error_message = tk.Label(self, text="",
+                                      font=MEDIUM_FONT, fg=ERROR_COLOUR)
+        self.error_message.grid(row=3, column=0, sticky="n")
 
         self.entry = tk.Text(self, width=50, height=2, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
         self.entry.grid(row=1, column=0, columnspan=2, rowspan=2, sticky="w", padx=10, ipady=30)
@@ -134,6 +135,12 @@ class MainPage(tk.Frame):
         if message.strip("\n") == "" or not self.can_send:
             return
 
+        if len(message) > MESSAGE_LENGTH_THRESHOLD:
+            self.error_message.config(text="Message is too long!")
+            self.can_send = False
+            self.controller.after(2000, self.allow_message)
+            return
+
         time = datetime.datetime.now().time()
         hours, minutes, seconds = str(time.hour), str(time.minute), str(time.second)
         if len(hours) == 1:
@@ -146,8 +153,8 @@ class MainPage(tk.Frame):
         self.data["messages"].append("<{}:{}:{}> {}: {}".format(hours, minutes, seconds,
                                                                 self.controller.username, message.strip("\n")))
 
-        if len(self.data["messages"]) > MESSAGE_THRESHOLD:
-            self.data["messages"] = self.data["messages"][-MESSAGE_THRESHOLD:]
+        if len(self.data["messages"]) > MESSAGE_AMOUNT_THRESHOLD:
+            self.data["messages"] = self.data["messages"][-MESSAGE_AMOUNT_THRESHOLD:]
 
         with open(FILE_PATH, 'w') as outfile:
             json.dump(self.data, outfile)
@@ -181,6 +188,7 @@ class MainPage(tk.Frame):
     def allow_message(self):
 
         self.can_send = True
+        self.error_message.config(text="")
 
 
 app = Messenger()

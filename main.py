@@ -144,6 +144,8 @@ class MainPage(tk.Frame):
 
             return
 
+        message = message.replace("\n", " ")
+
         time = datetime.datetime.now().time()
         hours, minutes, seconds = str(time.hour), str(time.minute), str(time.second)
         if len(hours) == 1:

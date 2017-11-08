@@ -130,6 +130,8 @@ class MainPage(tk.Frame):
         self.controller.geometry('800x600')
         self.controller.bind("<Return>", lambda e: self.send_message(self.entry.get("1.0", tk.END)))
 
+        self.set_online()
+
     def send_message(self, message):
 
         if message.strip("\n") == "" or not self.can_send:
@@ -174,15 +176,26 @@ class MainPage(tk.Frame):
     def refresh(self):
 
         with open(FILE_PATH, 'r') as infile:
-            data = json.load(infile)
+            self.data = json.load(infile)
 
         self.display.config(state="normal")
         self.display.delete('1.0', tk.END)
 
-        for message in data["messages"]:
+        for message in self.data["messages"]:
             self.display.insert(tk.END, message + "\n")
 
         self.display.config(state="disabled")
+
+    def set_online(self):
+
+        with open(FILE_PATH, 'r') as infile:
+            self.data = json.load(infile)
+
+        if self.controller.username not in self.data["online"]:
+            self.data["online"].append(self.controller.username)
+
+        with open(FILE_PATH, 'w') as outfile:
+            json.dump(self.data, outfile)
 
     def auto_refresh(self):
 

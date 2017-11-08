@@ -1,5 +1,6 @@
 import tkinter as tk
 import json
+import datetime
 
 from settings import *
 
@@ -89,7 +90,10 @@ class MainPage(tk.Frame):
         if message == "":
             return
 
-        self.data["messages"].append("{}: {}".format(self.controller.username, message))
+        time = datetime.datetime.now().time()
+
+        self.data["messages"].append("<{}:{}:{}> {}: {}".format(time.hour, time.minute, time.second,
+                                                                self.controller.username, message))
 
         if len(self.data["messages"]) > MESSAGE_THRESHOLD:
             self.data["messages"] = self.data["messages"][-MESSAGE_THRESHOLD:]

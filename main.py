@@ -77,6 +77,7 @@ class LoginPage(tk.Frame):
     def setup(self):
 
         self.controller.geometry('300x180')
+        self.controller.bind("<Return>", lambda e: self.login)
 
 
 class MainPage(tk.Frame):
@@ -89,8 +90,6 @@ class MainPage(tk.Frame):
         self.controller = controller
 
         self.can_send = True
-
-        self.controller.bind("<Return>", lambda e: self.send_message(self.entry.get("1.0", tk.END)))
 
         with open(FILE_PATH, 'r') as infile:
             self.data = json.load(infile)
@@ -125,6 +124,7 @@ class MainPage(tk.Frame):
     def setup(self):
 
         self.controller.geometry('800x600')
+        self.controller.bind("<Return>", lambda e: self.send_message(self.entry.get("1.0", tk.END)))
 
     def send_message(self, message):
 

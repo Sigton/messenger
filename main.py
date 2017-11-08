@@ -131,6 +131,7 @@ class MainPage(tk.Frame):
         self.controller.bind("<Return>", lambda e: self.send_message(self.entry.get("1.0", tk.END)))
 
         self.set_online()
+        self.controller.protocol("WM_DELETE_WINDOW", self.logoff)
 
     def send_message(self, message):
 
@@ -196,6 +197,18 @@ class MainPage(tk.Frame):
 
         with open(FILE_PATH, 'w') as outfile:
             json.dump(self.data, outfile)
+
+    def logoff(self):
+
+        with open(FILE_PATH, 'r') as infile:
+            self.data = json.load(infile)
+
+        self.data["online"].remove(self.controller.username)
+
+        with open(FILE_PATH, 'w') as outfile:
+            json.dump(self.data, outfile)
+
+        self.controller.destroy()
 
     def auto_refresh(self):
 

@@ -71,6 +71,8 @@ class MainPage(tk.Frame):
         self.parent = parent
         self.controller = controller
 
+        self.can_send = True
+
         self.controller.bind("<Return>", lambda e: self.send_message(self.entry.get()))
 
         with open(FILE_PATH, 'r') as infile:
@@ -88,7 +90,8 @@ class MainPage(tk.Frame):
 
     def send_message(self, message):
 
-        if message == "":
+        if message == "" or not self.can_send:
+            self.entry.delete(0, tk.END)
             return
 
         time = datetime.datetime.now().time()
@@ -105,6 +108,9 @@ class MainPage(tk.Frame):
         self.entry.delete(0, tk.END)
 
         self.refresh()
+
+        self.can_send = False
+        self.controller.after(2000, self.allow_message)
 
     def refresh(self):
 
@@ -124,6 +130,10 @@ class MainPage(tk.Frame):
         self.refresh()
 
         self.controller.after(5000, self.auto_refresh)
+
+    def allow_message(self):
+
+        self.can_send = True
 
 
 app = Messenger()

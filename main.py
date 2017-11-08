@@ -70,6 +70,8 @@ class MainPage(tk.Frame):
         self.parent = parent
         self.controller = controller
 
+        self.controller.bind("<Return>", lambda e: self.send_message(self.entry.get()))
+
         with open(FILE_PATH, 'r') as infile:
             self.data = json.load(infile)
 

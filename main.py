@@ -69,14 +69,12 @@ class MainPage(tk.Frame):
         self.parent = parent
         self.controller = controller
 
-        self.username = self.controller.username
-
         with open(FILE_PATH, 'r') as infile:
             self.data = json.load(infile)
 
         self.entry = tk.Entry(self)
         self.entry.pack()
-        self.send_button = tk.Button(self, text="Send", command=lambda: self.send_message(entry.get()))
+        self.send_button = tk.Button(self, text="Send", command=lambda: self.send_message(self.entry.get()))
         self.send_button.pack()
         self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh)
         self.refresh_button.pack()
@@ -85,7 +83,7 @@ class MainPage(tk.Frame):
 
     def send_message(self, message):
 
-        self.data["messages"].append("{}: {}".format(self.username, message))
+        self.data["messages"].append("{}: {}".format(self.controller.username, message))
 
         with open(FILE_PATH, 'w') as outfile:
             json.dump(self.data, outfile)

@@ -50,11 +50,13 @@ class LoginPage(tk.Frame):
         self.parent = parent
         self.controller = controller
 
-        self.name_entry = tk.Entry(self)
-        self.name_entry.pack()
+        tk.Label(self, text="Enter your nickname:").grid(row=0, column=0, sticky="w", padx=10, pady=10)
 
-        self.enter_button = tk.Button(self, text="Login", command=self.login)
-        self.enter_button.pack()
+        self.name_entry = tk.Entry(self)
+        self.name_entry.grid(row=0, column=1)
+
+        self.enter_button = tk.Button(self, text="Login", command=self.login, width=25)
+        self.enter_button.grid(row=2, column=0, columnspan=2)
 
     def login(self):
 

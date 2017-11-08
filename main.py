@@ -62,7 +62,7 @@ class LoginPage(tk.Frame):
         self.name_entry.grid(row=1, column=1)
 
         self.enter_button = tk.Button(self, text="Login", command=self.login, width=25,
-                                      bg=BUTTON_COLOUR, font=BUTTON_FONT)
+                                      bg=BUTTON_COLOUR, font=BUTTON_FONT, activebackground=BUTTON_ACTIVE_COLOUR)
         self.enter_button.grid(row=2, column=0, columnspan=2)
 
     def login(self):
@@ -100,11 +100,13 @@ class MainPage(tk.Frame):
 
         self.send_button = tk.Button(self, text="Send",
                                      command=lambda: self.send_message(self.entry.get("1.0", tk.END)),
-                                     width=10, bg=BUTTON_COLOUR, font=BUTTON_FONT)
+                                     width=10, bg=BUTTON_COLOUR, font=BUTTON_FONT,
+                                     activebackground=BUTTON_ACTIVE_COLOUR)
         self.send_button.grid(row=1, column=2, sticky="w", ipady=10, padx=5)
 
         self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh,
-                                        width=10, bg=BUTTON_COLOUR, font=BUTTON_FONT)
+                                        width=10, bg=BUTTON_COLOUR, font=BUTTON_FONT,
+                                        activebackground=BUTTON_ACTIVE_COLOUR)
         self.refresh_button.grid(row=2, column=2, sticky="w", ipady=10, padx=5)
 
         self.display = tk.Text(self, state="disabled", width=100, height=25, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)

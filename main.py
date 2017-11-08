@@ -78,3 +78,7 @@ class MainPage(tk.Frame):
 
         for message in data["messages"]:
             self.display.insert(tk.END, message + "\n")
+
+
+app = Messenger()
+app.mainloop()

@@ -92,8 +92,12 @@ class MainPage(tk.Frame):
         with open(FILE_PATH, 'r') as infile:
             self.data = json.load(infile)
 
-        tk.Label(self, text="GHS Messenger", font=HEADING_FONT).grid(row=0, column=0, columnspan=3,
-                                                                     pady=10, padx=20, sticky="nw")
+        tk.Label(self, text="GHS Messenger",
+                 font=HEADING_FONT).grid(row=0, column=0, columnspan=3,
+                                         pady=10, padx=20, sticky="nw")
+        tk.Label(self, text="Online Users:",
+                 font=HEADING_FONT).grid(row=0, column=3,
+                                         pady=10, padx=10, sticky="nw")
 
         self.entry = tk.Text(self, width=50, height=2, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
         self.entry.grid(row=1, column=0, columnspan=2, rowspan=2, sticky="w", padx=10, ipady=30)
@@ -113,7 +117,7 @@ class MainPage(tk.Frame):
         self.display.grid(row=5, column=0, columnspan=4, sticky="nsew")
 
         self.online_users = tk.Text(self, state="disabled", height=12, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
-        self.online_users.grid(row=0, column=3, rowspan=5)
+        self.online_users.grid(row=1, column=3, rowspan=4)
 
     def setup(self):
 

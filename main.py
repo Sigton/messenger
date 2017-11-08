@@ -14,7 +14,7 @@ class Messenger(tk.Tk):
 
         self.username = ""
 
-        self.tk_setPalette(background="#4f545c")
+        self.tk_setPalette(background=BACKGROUND_COLOUR)
 
         tk.Tk.wm_title(self, "Messenger")
         self.geometry('800x600')
@@ -53,7 +53,7 @@ class LoginPage(tk.Frame):
         self.parent = parent
         self.controller = controller
 
-        tk.Label(self, text="Login to GHS Messenger", font=("Verdana", 12)).grid(row=0, column=0, columnspan=2, pady=10)
+        tk.Label(self, text="Login to GHS Messenger", font=HEADING_FONT).grid(row=0, column=0, columnspan=2, pady=10)
         tk.Label(self, text="Enter your nickname:").grid(row=1, column=0, sticky="w", padx=10, pady=30)
 
         self.name_entry = tk.Entry(self)
@@ -89,9 +89,10 @@ class MainPage(tk.Frame):
         with open(FILE_PATH, 'r') as infile:
             self.data = json.load(infile)
 
-        tk.Label(self, text="GHS Messenger", font=("Verdana", 16)).grid(row=0, column=0, columnspan=3, pady=10)
+        tk.Label(self, text="GHS Messenger", font=HEADING_FONT).grid(row=0, column=0, columnspan=3,
+                                                                     pady=10, padx=20, sticky="nw")
 
-        self.entry = tk.Text(self, width=50, height=2, bg="#36393f")
+        self.entry = tk.Text(self, width=50, height=2, bg=TEXTBOX_COLOUR)
         self.entry.grid(row=1, column=0, columnspan=2, rowspan=2, sticky="w", padx=10, ipady=30)
 
         self.send_button = tk.Button(self, text="Send",
@@ -102,10 +103,10 @@ class MainPage(tk.Frame):
         self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh, width=10, bg="#4e5d94")
         self.refresh_button.grid(row=2, column=2, sticky="w", ipady=10, padx=5)
 
-        self.display = tk.Text(self, state="disabled", width=100, height=25, bg="#2f3136")
+        self.display = tk.Text(self, state="disabled", width=100, height=25, bg=TEXTBOX_COLOUR)
         self.display.grid(row=5, column=0, columnspan=4, sticky="sw")
 
-        self.online_users = tk.Text(self, state="disabled", height=12, bg="#2f3136")
+        self.online_users = tk.Text(self, state="disabled", height=12, bg=TEXTBOX_COLOUR)
         self.online_users.grid(row=0, column=3, rowspan=5)
 
     def setup(self):

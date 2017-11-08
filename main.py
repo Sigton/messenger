@@ -38,6 +38,7 @@ class Messenger(tk.Tk):
 
         frame = self.frames[cont]
         frame.tkraise()
+        frame.setup()
 
 
 class LoginPage(tk.Frame):
@@ -60,6 +61,10 @@ class LoginPage(tk.Frame):
         self.controller.username = self.name_entry.get()
         self.controller.frames[MainPage].auto_refresh()
         self.controller.show_frame(MainPage)
+
+    def setup(self):
+
+        self.controller.geometry('400x400')
 
 
 class MainPage(tk.Frame):
@@ -87,6 +92,10 @@ class MainPage(tk.Frame):
         self.display = tk.Text(self)
         self.display.config(state="disabled")
         self.display.pack()
+
+    def setup(self):
+
+        self.controller.geometry('800x600')
 
     def send_message(self, message):
 

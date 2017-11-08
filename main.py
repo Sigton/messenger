@@ -70,8 +70,14 @@ class LoginPage(tk.Frame):
         name = self.name_entry.get()
 
         if 2 < len(name) < 13:
-            self.controller.username = self.name_entry.get()
-            self.controller.show_frame(MainPage)
+
+            with open(FILE_PATH, 'r') as infile:
+                data = json.load(infile)
+
+            if name not in data["online"]:
+
+                self.controller.username = self.name_entry.get()
+                self.controller.show_frame(MainPage)
 
     def setup(self):
 

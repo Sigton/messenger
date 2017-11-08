@@ -92,6 +92,8 @@ class MainPage(tk.Frame):
         with open(FILE_PATH, 'w') as outfile:
             json.dump(self.data, outfile)
 
+        self.entry.delete(0, tk.END)
+
         self.refresh()
 
     def refresh(self):

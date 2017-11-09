@@ -207,7 +207,7 @@ class MainPage(tk.Frame):
             self.data["messages"] = self.data["messages"][-MESSAGE_AMOUNT_THRESHOLD:]
 
         with open(FILE_PATH, 'w') as outfile:
-            msvcrt.locking(outfile.fileno(), 1, os.path.getsize(FILE_PATH))
+            msvcrt.locking(outfile.fileno(), msvcrt.LK_LOCK, os.path.getsize(FILE_PATH))
             json.dump(self.data, outfile)
 
         self.entry.delete("1.0", tk.END)
@@ -247,7 +247,7 @@ class MainPage(tk.Frame):
             self.data["online"].append(self.controller.username)
 
         with open(FILE_PATH, 'w') as outfile:
-            msvcrt.locking(outfile.fileno(), 1, os.path.getsize(FILE_PATH))
+            msvcrt.locking(outfile.fileno(), msvcrt.LK_LOCK, os.path.getsize(FILE_PATH))
             json.dump(self.data, outfile)
 
     def logoff(self):
@@ -263,7 +263,7 @@ class MainPage(tk.Frame):
             pass
 
         with open(FILE_PATH, 'w') as outfile:
-            msvcrt.locking(outfile.fileno(), 1, os.path.getsize(FILE_PATH))
+            msvcrt.locking(outfile.fileno(), msvcrt.LK_LOCK, os.path.getsize(FILE_PATH))
             json.dump(self.data, outfile)
 
         self.controller.destroy()

@@ -142,6 +142,9 @@ class MainPage(tk.Frame):
         self.menu_bar = tk.Menu(self.controller)
 
         self.file_menu = tk.Menu(self.menu_bar)
+        self.file_menu.add_command(label="Settings", command=None)
+        self.file_menu.add_separator()
+        self.file_menu.add_command(label="Logout", command=None)
         self.file_menu.add_command(label="Quit", command=self.logoff)
         self.menu_bar.add_cascade(label="Messenger", menu=self.file_menu)
 

@@ -17,7 +17,7 @@ class Messenger(tk.Tk):
 
         self.tk_setPalette(background=BACKGROUND_COLOUR)
 
-        tk.Tk.wm_title(self, "GHSM")
+        tk.Tk.wm_title(self, "Woodpecker")
         self.geometry('800x600')
         self.resizable(False, False)
 
@@ -55,9 +55,9 @@ class LoginPage(tk.Frame):
         self.parent = parent
         self.controller = controller
 
-        tk.Label(self, text="Login to GHS Messenger", font=HEADING_FONT).grid(row=0, column=0, columnspan=2, pady=10)
+        tk.Label(self, text="Login to Woodpecker", font=HEADING_FONT).grid(row=0, column=0, columnspan=2, pady=10)
         tk.Label(self, text="Enter your nickname:",
-                 font=TEXTBOX_FONT).grid(row=1, column=0, sticky="w", padx=10, pady=30)
+                 font=TEXTBOX_FONT).grid(row=1, column=0, sticky="w", padx=10,pady=30)
 
         self.name_entry = tk.Entry(self, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
         self.name_entry.grid(row=1, column=1)
@@ -74,7 +74,6 @@ class LoginPage(tk.Frame):
 
             with open(FILE_PATH, 'r') as infile:
                 data = json.load(infile)
-
             if name not in data["online"]:
 
                 self.controller.username = self.name_entry.get()
@@ -106,13 +105,13 @@ class MainPage(tk.Frame):
         with open(FILE_PATH, 'r') as infile:
             self.data = json.load(infile)
 
-        tk.Label(self, text="GHS Messenger",
+        tk.Label(self, text="Woodpecker",
                  font=HEADING_FONT).grid(row=0, column=0, columnspan=3,
                                          pady=10, padx=20, sticky="nw")
         tk.Label(self, text="Online Users:",
                  font=HEADING_FONT).grid(row=0, column=3,
                                          pady=10, sticky="nw")
-        tk.Label(self, text="By Jamie",
+        tk.Label(self, text="By Jamie, v0.6.0: Added join leave messages, Rebranded",
                  font=MEDIUM_FONT, fg=DARK_TEXT_COLOUR).grid(row=6, column=0, sticky="nw", pady=10, padx=20)
 
         self.error_message = tk.Label(self, text="",
@@ -146,7 +145,7 @@ class MainPage(tk.Frame):
         self.file_menu.add_separator()
         self.file_menu.add_command(label="Logout", command=None)
         self.file_menu.add_command(label="Quit", command=self.logoff)
-        self.menu_bar.add_cascade(label="GHSM", menu=self.file_menu)
+        self.menu_bar.add_cascade(label="WP", menu=self.file_menu)
 
         self.servers_menu = tk.Menu(self.menu_bar)
         self.servers_menu.add_command(label="Add Server", command=None)
@@ -165,9 +164,11 @@ class MainPage(tk.Frame):
 
         self.controller.config(menu=self.menu_bar)
 
+        self.send_message(self.controller.username + " is now online.", False)
+
         self.auto_refresh()
 
-    def send_message(self, message):
+    def send_message(self, message, prefix=True):
 
         if message.strip("\n") == "" or not self.can_send:
             return
@@ -194,8 +195,11 @@ class MainPage(tk.Frame):
         if len(seconds) == 1:
             seconds = "0" + seconds
 
-        self.data["messages"].append("<{}:{}:{}> {}: {}".format(hours, minutes, seconds,
-                                                                self.controller.username, message.strip("\n")))
+        if prefix:
+            self.data["messages"].append("<{}:{}:{}> {}: {}".format(hours, minutes, seconds,
+                                                                    self.controller.username, message.strip("\n")))
+        else:
+            self.data["messages"].append("<{}:{}:{}> {}".format(hours, minutes, seconds, message))
 
         if len(self.data["messages"]) > MESSAGE_AMOUNT_THRESHOLD:
             self.data["messages"] = self.data["messages"][-MESSAGE_AMOUNT_THRESHOLD:]
@@ -246,7 +250,9 @@ class MainPage(tk.Frame):
 
         with open(FILE_PATH, 'r') as infile:
             self.data = json.load(infile)
-
+            
+        self.send_message(self.controller.username + " has went offline.", False)
+            
         self.data["online"].remove(self.controller.username)
 
         with open(FILE_PATH, 'w') as outfile:
@@ -258,7 +264,7 @@ class MainPage(tk.Frame):
 
         self.refresh()
 
-        self.controller.after(5000, self.auto_refresh)
+        self.controller.after(UPDATE_FREQUENCY, self.auto_refresh)
 
     def allow_message(self):
 

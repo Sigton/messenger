@@ -1,10 +1,12 @@
 
 # "//H023FILESRV01/OldPupilSHare/messages.json"
 
-FILE_PATH = "D:/messages.json"
+FILE_PATH = "//H023FILESRV01/OldPupilSHare/slamjam/messenger/defaultserver.json"
 
 MESSAGE_AMOUNT_THRESHOLD = 20
 MESSAGE_LENGTH_THRESHOLD = 100
+
+UPDATE_FREQUENCY = 1000
 
 # Colours
 BACKGROUND_COLOUR = "#4f545c"

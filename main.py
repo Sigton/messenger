@@ -113,7 +113,7 @@ class MainPage(tk.Frame):
                  font=HEADING_FONT).grid(row=0, column=3,
                                          pady=10, sticky="nw")
         tk.Label(self, text="By Jamie",
-                 font=MEDIUM_FONT, fg=DARK_TEXT_COLOUR).grid(row=6, column=0, sticky="sw", pady=20, padx=20)
+                 font=MEDIUM_FONT, fg=DARK_TEXT_COLOUR).grid(row=6, column=0, sticky="nw", pady=10, padx=20)
 
         self.error_message = tk.Label(self, text="",
                                       font=MEDIUM_FONT, fg=ERROR_COLOUR)
@@ -153,6 +153,8 @@ class MainPage(tk.Frame):
 
         self.set_online()
         self.controller.protocol("WM_DELETE_WINDOW", self.logoff)
+
+        self.controller.config(menu=self.menu_bar)
 
         self.auto_refresh()
 

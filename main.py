@@ -113,7 +113,7 @@ class MainPage(tk.Frame):
         tk.Label(self, text="Online Users:",
                  font=HEADING_FONT).grid(row=0, column=3,
                                          pady=10, sticky="nw")
-        tk.Label(self, text="By Jamie, v0.6.0: Added join leave messages, Rebranded",
+        tk.Label(self, text="By Jamie, v0.6.0",
                  font=MEDIUM_FONT, fg=DARK_TEXT_COLOUR).grid(row=6, column=0, sticky="nw", pady=10, padx=20)
 
         self.error_message = tk.Label(self, text="",

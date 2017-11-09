@@ -256,8 +256,11 @@ class MainPage(tk.Frame):
             self.data = json.load(infile)
             
         self.send_message(self.controller.username + " has went offline.", False)
-            
-        self.data["online"].remove(self.controller.username)
+
+        try:
+            self.data["online"].remove(self.controller.username)
+        except ValueError:
+            pass
 
         with open(FILE_PATH, 'w') as outfile:
             msvcrt.locking(outfile.fileno(), 1, os.path.getsize(FILE_PATH))

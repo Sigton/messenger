@@ -139,6 +139,13 @@ class MainPage(tk.Frame):
         self.online_users = tk.Text(self, state="disabled", height=12, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
         self.online_users.grid(row=1, column=3, rowspan=4)
 
+        self.menu_bar = tk.Menu(self.controller)
+
+        self.file_menu = tk.Menu(self.menu_bar)
+        self.file_menu.add_command(label="Quit", command=self.logoff)
+
+        self.menu_bar.add_cascade(label="File", menu=self.file_menu)
+
     def setup(self):
 
         self.controller.geometry('800x600')

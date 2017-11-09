@@ -151,7 +151,8 @@ class MainPage(tk.Frame):
         self.servers_menu = tk.Menu(self.menu_bar)
         self.servers_menu.add_command(label="Add Server", command=None)
         self.servers_menu.add_command(label="Set Server", command=None)
-        self.servers_menu.add_command(label="View Servers", command=None)
+        self.servers_menu.add_command(label="Manage Servers", command=None)
+        self.servers_menu.add_command(label="Create Server", command=None)
         self.menu_bar.add_cascade(label="Servers", menu=self.servers_menu)
 
     def setup(self):

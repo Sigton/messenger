@@ -143,8 +143,13 @@ class MainPage(tk.Frame):
 
         self.file_menu = tk.Menu(self.menu_bar)
         self.file_menu.add_command(label="Quit", command=self.logoff)
+        self.menu_bar.add_cascade(label="Messenger", menu=self.file_menu)
 
-        self.menu_bar.add_cascade(label="File", menu=self.file_menu)
+        self.servers_menu = tk.Menu(self.menu_bar)
+        self.servers_menu.add_command(label="Add Server", command=None)
+        self.servers_menu.add_command(label="Set Server", command=None)
+        self.servers_menu.add_command(label="View Servers", command=None)
+        self.menu_bar.add_cascade(label="Servers", menu=self.servers_menu)
 
     def setup(self):
 

@@ -17,7 +17,7 @@ class Messenger(tk.Tk):
 
         self.tk_setPalette(background=BACKGROUND_COLOUR)
 
-        tk.Tk.wm_title(self, "Messenger")
+        tk.Tk.wm_title(self, "GHSM")
         self.geometry('800x600')
         self.resizable(False, False)
 
@@ -146,7 +146,7 @@ class MainPage(tk.Frame):
         self.file_menu.add_separator()
         self.file_menu.add_command(label="Logout", command=None)
         self.file_menu.add_command(label="Quit", command=self.logoff)
-        self.menu_bar.add_cascade(label="Messenger", menu=self.file_menu)
+        self.menu_bar.add_cascade(label="GHSM", menu=self.file_menu)
 
         self.servers_menu = tk.Menu(self.menu_bar)
         self.servers_menu.add_command(label="Add Server", command=None)

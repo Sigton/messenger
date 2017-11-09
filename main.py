@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 import json
 import datetime
@@ -78,6 +79,12 @@ class LoginPage(tk.Frame):
 
                 self.controller.username = self.name_entry.get()
                 self.controller.show_frame(MainPage)
+
+            else:
+                messagebox.showerror("Failed to Login", "That username is already taken!")
+
+        else:
+            messagebox.showerror("Failed to Login", "Username has to be between 3 and 12 characters.")
 
     def setup(self):
 

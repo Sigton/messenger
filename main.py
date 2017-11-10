@@ -77,10 +77,10 @@ class LoginPage(tk.Frame):
 
         if 2 < len(name) < 13:
 
-            self.controller.cursor.execute('''SELECT nickname FROM messages''')
-            messages = sum(self.controller.cursor.fetchall(), [])
+            self.controller.cursor.execute('''SELECT nickname FROM users''')
+            users = [user[0] for user in self.controller.cursor.fetchall()]
 
-            if name not in messages:
+            if name not in users:
 
                 self.controller.username = self.name_entry.get()
                 self.controller.show_frame(MainPage)

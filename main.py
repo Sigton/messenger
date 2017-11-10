@@ -272,6 +272,14 @@ class MainPage(tk.Frame):
         self.can_send = True
         self.error_message.config(text="")
 
+    def set_status_away(self):
+
+        pass
+
+    def set_status_here(self):
+
+        pass
+
 
 app = Messenger()
 app.mainloop()

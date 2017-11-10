@@ -5,6 +5,7 @@ import json
 import datetime
 import msvcrt
 import os
+import sqlite3
 
 from settings import *
 
@@ -15,6 +16,9 @@ class Messenger(tk.Tk):
 
         tk.Tk.__init__(self, *args, **kwargs)
 
+        self.db = sqlite3.connect("//H023FILESRV01/OldPupilSHare/slamjam/messenger/defaultserver.db")
+        self.cursor = self.db.cursor()
+        
         self.username = ""
 
         self.tk_setPalette(background=BACKGROUND_COLOUR)
@@ -197,18 +201,13 @@ class MainPage(tk.Frame):
         if len(seconds) == 1:
             seconds = "0" + seconds
 
-        if prefix:
-            self.data["messages"].append("<{}:{}:{}> {}: {}".format(hours, minutes, seconds,
-                                                                    self.controller.username, message.strip("\n")))
-        else:
-            self.data["messages"].append("<{}:{}:{}> {}".format(hours, minutes, seconds, message))
-
         if len(self.data["messages"]) > MESSAGE_AMOUNT_THRESHOLD:
             self.data["messages"] = self.data["messages"][-MESSAGE_AMOUNT_THRESHOLD:]
 
-        with open(FILE_PATH, 'w') as outfile:
-            msvcrt.locking(outfile.fileno(), msvcrt.LK_LOCK, os.path.getsize(FILE_PATH))
-            json.dump(self.data, outfile)
+        self.controller.cursor.execute('''INSERT INTO messages(time, name, message, prefix)
+                                                  VALUES(?,?,?,?)''',
+                                          ("<{}:{}:{}>".format(hours, minutes, seconds), self.controller.username, message, prefix))
+        self.controller.db.commit()
 
         self.entry.delete("1.0", tk.END)
 
@@ -222,11 +221,16 @@ class MainPage(tk.Frame):
         with open(FILE_PATH, 'r') as infile:
             self.data = json.load(infile)
 
+        self.controller.cursor.execute('''SELECT time, name, message, prefix FROM messages''')
+        messages = self.controller.cursor.fetchall()[-20:]
+
         self.display.config(state="normal")
         self.display.delete('1.0', tk.END)
 
-        for message in self.data["messages"]:
-            self.display.insert(tk.END, message + "\n")
+        for message in messages:
+            self.display.insert(tk.END,
+                                "{} {}: {}\n".format(message[0], message[1], message[2]) if message[3]\
+                                else "{} {}\n".format(message[0], message[2]))
 
         self.display.config(state="disabled")
 
@@ -267,6 +271,7 @@ class MainPage(tk.Frame):
             json.dump(self.data, outfile)
 
         self.controller.destroy()
+        self.controller.db.close()
 
     def auto_refresh(self):
 

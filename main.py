@@ -142,19 +142,10 @@ class MainPage(tk.Frame):
 
         self.menu_bar = tk.Menu(self.controller)
 
-        self.file_menu = tk.Menu(self.menu_bar)
-        self.file_menu.add_command(label="Settings", command=None)
-        self.file_menu.add_separator()
-        self.file_menu.add_command(label="Logout", command=None)
-        self.file_menu.add_command(label="Quit", command=self.logoff)
-        self.menu_bar.add_cascade(label="WP", menu=self.file_menu)
-
-        self.servers_menu = tk.Menu(self.menu_bar)
-        self.servers_menu.add_command(label="Add Server", command=None)
-        self.servers_menu.add_command(label="Set Server", command=None)
-        self.servers_menu.add_command(label="Manage Servers", command=None)
-        self.servers_menu.add_command(label="Create Server", command=None)
-        self.menu_bar.add_cascade(label="Servers", menu=self.servers_menu)
+        self.menu_bar.add_command(label="Quit", command=self.logoff)
+        self.menu_bar.add_command(label="Logout", command=None)
+        self.menu_bar.add_command(label="Servers", command=None)
+        self.menu_bar.add_command(label="Styling", command=None)
 
     def setup(self):
 

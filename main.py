@@ -220,9 +220,6 @@ class MainPage(tk.Frame):
 
     def refresh(self):
 
-        with open(FILE_PATH, 'r') as infile:
-            self.data = json.load(infile)
-
         self.controller.cursor.execute('''SELECT time, name, message, prefix FROM messages''')
         messages = self.controller.cursor.fetchall()[-20:]
 
@@ -239,7 +236,12 @@ class MainPage(tk.Frame):
         self.online_users.config(state="normal")
         self.online_users.delete('1.0', tk.END)
 
-        for user in self.data["online"]:
+        self.controller.cursor.execute('''SELECT nickname, status FROM users''')
+        users = self.controller.cursor.fetchall()
+
+        user_names = [user[0] for user in users]
+
+        for user in user_names:
             self.online_users.insert(tk.END, user + "\n")
 
         self.online_users.config(state="disabled")
@@ -263,14 +265,9 @@ class MainPage(tk.Frame):
             
         self.send_message(self.controller.username + " has went offline.", False)
 
-        try:
-            self.data["online"].remove(self.controller.username)
-        except ValueError:
-            pass
+        self.controller.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.controller.username,))
 
-        with open(FILE_PATH, 'w') as outfile:
-            msvcrt.locking(outfile.fileno(), msvcrt.LK_LOCK, os.path.getsize(FILE_PATH))
-            json.dump(self.data, outfile)
+        self.controller.db.commit()
 
         self.controller.destroy()
         self.controller.db.close()

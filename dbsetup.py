@@ -1,7 +1,8 @@
 import sqlite3
 
-db = sqlite3.connect("//H023FILESRV01/OldPupilSHare/slamjam/messenger/defaultserver.db")
+# "//H023FILESRV01/OldPupilSHare/slamjam/messenger/defaultserver.db")
 
+db = sqlite3.connect("D:/messenger servers/defaultserver.db")
 
 cursor = db.cursor()
 

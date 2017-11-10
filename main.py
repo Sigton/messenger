@@ -2,8 +2,6 @@ import tkinter as tk
 from tkinter import messagebox
 
 import datetime
-import msvcrt
-import os
 import sqlite3
 
 from settings import *

@@ -105,6 +105,7 @@ class MainPage(tk.Frame):
         self.controller = controller
 
         self.can_send = True
+        self.status = 0
 
         tk.Label(self, text="Woodpecker",
                  font=HEADING_FONT).grid(row=0, column=0, columnspan=3,
@@ -159,6 +160,8 @@ class MainPage(tk.Frame):
 
         self.controller.geometry('800x600')
         self.controller.bind("<Return>", lambda e: self.send_message(self.entry.get("1.0", tk.END)))
+        self.controller.bind("<FocusIn>", self.set_status_here)
+        self.controller.bind("<FocusOut>", self.set_status_away)
 
         self.set_online()
         self.controller.protocol("WM_DELETE_WINDOW", self.logoff)
@@ -272,17 +275,19 @@ class MainPage(tk.Frame):
         self.can_send = True
         self.error_message.config(text="")
 
-    def set_status_away(self):
+    def set_status_away(self, event):
 
-        self.controller.cursor.execute('''UPDATE users SET status = 1 WHERE nickname = ?''',
-                                       (self.controller.username,))
-        self.controller.db.commit()
+        if event.widget == self.controller:
+            self.controller.cursor.execute('''UPDATE users SET status = 0 WHERE nickname = ?''',
+                                           (self.controller.username,))
+            self.controller.db.commit()
 
-    def set_status_here(self):
+    def set_status_here(self, event):
 
-        self.controller.cursor.execute('''UPDATE users SET status = 0 WHERE nickname = ?''',
-                                       (self.controller.username,))
-        self.controller.db.commit()
+        if event.widget == self.controller:
+            self.controller.cursor.execute('''UPDATE users SET status = 1 WHERE nickname = ?''',
+                                           (self.controller.username,))
+            self.controller.db.commit()
 
 
 app = Messenger()

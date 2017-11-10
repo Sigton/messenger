@@ -16,7 +16,7 @@ class Messenger(tk.Tk):
 
         tk.Tk.__init__(self, *args, **kwargs)
 
-        self.db = sqlite3.connect("//H023FILESRV01/OldPupilSHare/slamjam/messenger/defaultserver.db")
+        self.db = sqlite3.connect(FILE_PATH)
         self.cursor = self.db.cursor()
         
         self.username = ""
@@ -78,9 +78,10 @@ class LoginPage(tk.Frame):
 
         if 2 < len(name) < 13:
 
-            with open(FILE_PATH, 'r') as infile:
-                data = json.load(infile)
-            if name not in data["online"]:
+            self.controller.cursor.execute('''SELECT nickname FROM messages''')
+            messages = sum(self.controller.cursor.fetchall(), [])
+
+            if name not in messages:
 
                 self.controller.username = self.name_entry.get()
                 self.controller.show_frame(MainPage)
@@ -206,7 +207,8 @@ class MainPage(tk.Frame):
 
         self.controller.cursor.execute('''INSERT INTO messages(time, name, message, prefix)
                                                   VALUES(?,?,?,?)''',
-                                          ("<{}:{}:{}>".format(hours, minutes, seconds), self.controller.username, message, prefix))
+                                       ("<{}:{}:{}>".format(hours, minutes, seconds),
+                                        self.controller.username, message, prefix))
         self.controller.db.commit()
 
         self.entry.delete("1.0", tk.END)

@@ -274,11 +274,15 @@ class MainPage(tk.Frame):
 
     def set_status_away(self):
 
-        pass
+        self.controller.cursor.execute('''UPDATE users SET status = 1 WHERE nickname = ?''',
+                                       (self.controller.username,))
+        self.controller.db.commit()
 
     def set_status_here(self):
 
-        pass
+        self.controller.cursor.execute('''UPDATE users SET status = 0 WHERE nickname = ?''',
+                                       (self.controller.username,))
+        self.controller.db.commit()
 
 
 app = Messenger()

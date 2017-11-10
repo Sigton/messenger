@@ -21,7 +21,7 @@ cursor.execute("""
 """)
 
 cursor.execute("""
-    CREATE TABLE users(id INTEGER PRIMARY KEY, nickname TEXT, status TEXT)
+    CREATE TABLE users(id INTEGER PRIMARY KEY, nickname TEXT, status INTEGER)
 """)
 
 db.commit()

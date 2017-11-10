@@ -219,7 +219,7 @@ class MainPage(tk.Frame):
 
         for message in messages:
             self.display.insert(tk.END,
-                                "{} {}: {}\n".format(message[0], message[1], message[2]) if message[3]\
+                                "{} {}: {}\n".format(message[0], message[1], message[2]) if message[3]
                                 else "{} {}\n".format(message[0], message[2]))
 
         self.display.config(state="disabled")
@@ -232,8 +232,10 @@ class MainPage(tk.Frame):
 
         user_names = [user[0] for user in users]
 
+        n = 0
         for user in user_names:
-            self.online_users.insert(tk.END, user + "\n")
+            self.online_users.insert(tk.END, "{} {}\n".format(user, "(Away)" if not users[n][1] else ""))
+            n += 1
 
         self.online_users.config(state="disabled")
 
@@ -245,8 +247,8 @@ class MainPage(tk.Frame):
         user_names = [user[0] for user in users]
 
         if self.controller.username not in user_names:
-            self.controller.cursor.execute('''INSERT INTO users(nickname)
-                                              VALUES(?)''', (self.controller.username,))
+            self.controller.cursor.execute('''INSERT INTO users(nickname, status)
+                                              VALUES(?,?)''', (self.controller.username, 1))
 
     def logoff(self):
             

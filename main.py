@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
 
-import json
 import datetime
 import msvcrt
 import os
@@ -109,9 +108,6 @@ class MainPage(tk.Frame):
 
         self.can_send = True
 
-        with open(FILE_PATH, 'r') as infile:
-            self.data = json.load(infile)
-
         tk.Label(self, text="Woodpecker",
                  font=HEADING_FONT).grid(row=0, column=0, columnspan=3,
                                          pady=10, padx=20, sticky="nw")
@@ -202,9 +198,6 @@ class MainPage(tk.Frame):
         if len(seconds) == 1:
             seconds = "0" + seconds
 
-        if len(self.data["messages"]) > MESSAGE_AMOUNT_THRESHOLD:
-            self.data["messages"] = self.data["messages"][-MESSAGE_AMOUNT_THRESHOLD:]
-
         self.controller.cursor.execute('''INSERT INTO messages(time, name, message, prefix)
                                                   VALUES(?,?,?,?)''',
                                        ("<{}:{}:{}>".format(hours, minutes, seconds),
@@ -248,20 +241,16 @@ class MainPage(tk.Frame):
 
     def set_online(self):
 
-        with open(FILE_PATH, 'r') as infile:
-            self.data = json.load(infile)
+        self.controller.cursor.execute('''SELECT nickname, status FROM users''')
+        users = self.controller.cursor.fetchall()
 
-        if self.controller.username not in self.data["online"]:
-            self.data["online"].append(self.controller.username)
+        user_names = [user[0] for user in users]
 
-        with open(FILE_PATH, 'w') as outfile:
-            msvcrt.locking(outfile.fileno(), msvcrt.LK_LOCK, os.path.getsize(FILE_PATH))
-            json.dump(self.data, outfile)
+        if self.controller.username not in user_names:
+            self.controller.cursor.execute('''INSERT INTO users(nickname)
+                                              VALUES(?)''', (self.controller.username,))
 
     def logoff(self):
-
-        with open(FILE_PATH, 'r') as infile:
-            self.data = json.load(infile)
             
         self.send_message(self.controller.username + " has went offline.", False)
 

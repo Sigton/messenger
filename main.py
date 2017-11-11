@@ -148,7 +148,7 @@ class MainPage(tk.Frame):
 
         self.menu_bar.add_command(label="Quit", command=self.logoff)
         self.menu_bar.add_command(label="Logout", command=None)
-        self.menu_bar.add_command(label="Servers", command=None)
+        self.menu_bar.add_command(label="Servers", command=self.open_server_settings)
         self.menu_bar.add_command(label="Styling", command=None)
 
     def setup(self):

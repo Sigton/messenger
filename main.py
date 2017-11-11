@@ -280,12 +280,19 @@ class MainPage(tk.Frame):
                                            (self.controller.username,))
             self.controller.db.commit()
 
+    def open_server_settings(self):
+
+        pass
+
 
 class ServerSettings(tk.Toplevel):
 
-    def __init__(self):
+    def __init__(self, parent, controller):
 
         tk.Toplevel.__init__(self)
+
+        self.parent = parent
+        self.controller = controller
 
 
 app = Messenger()

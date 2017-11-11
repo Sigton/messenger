@@ -345,10 +345,13 @@ class MainPage(tk.Frame):
             self.preference_settings = PreferenceSettings(self, self.controller)
 
     def load_preferences(self):
-        with open(self.controller.preference_file, 'r') as infile:
-            data = json.load(infile)
+        try:
+            with open(self.controller.preference_file, 'r') as infile:
+                data = json.load(infile)
 
-        self.controller.servers = data["servers"]
+            self.controller.servers = data["servers"]
+        except Exception:
+            messagebox.showerror("Loading Failed", "Failed to load preferences, invalid save file.")
 
     def save_preferences(self):
         with open(self.controller.preference_file, 'w') as outfile:

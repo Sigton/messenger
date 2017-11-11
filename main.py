@@ -114,11 +114,13 @@ class MainPage(tk.Frame):
 
         self.server_settings = None
         self.style_settings = None
+        self.preference_settings = None
 
         self.can_send = True
         self.status = 0
         self.server_settings_open = False
         self.style_settings_open = False
+        self.preference_settings_open = False
 
         tk.Label(self, text="Woodpecker Messenger",
                  font=HEADING_FONT).grid(row=0, column=0, columnspan=3,
@@ -159,7 +161,7 @@ class MainPage(tk.Frame):
         self.menu_bar.add_command(label="Logout", command=None)
         self.menu_bar.add_command(label="Servers", command=self.open_server_settings)
         self.menu_bar.add_command(label="Styling", command=self.open_style_settings)
-        self.menu_bar.add_command(label="Preferences", command=None)
+        self.menu_bar.add_command(label="Preferences", command=self.open_preference_settings)
 
     def setup(self):
 
@@ -331,6 +333,12 @@ class MainPage(tk.Frame):
         if not self.style_settings_open:
             self.style_settings_open = True
             self.style_settings = StyleSettings(self, self.controller)
+
+    def open_preference_settings(self):
+
+        if not self.preference_settings_open:
+            self.preference_settings_open = True
+            self.preference_settings = PreferenceSettings(self, self.controller)
 
 
 class ServerSettings(tk.Toplevel):

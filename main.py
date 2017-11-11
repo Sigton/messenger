@@ -471,10 +471,11 @@ class ServerSettings(tk.Toplevel):
 
     def set_active_server(self):
 
-        self.active_server = self.selected_server
-        self.update_server_list()
+        if not self.active_server == self.selected_server:
+            self.active_server = self.selected_server
+            self.update_server_list()
 
-        self.controller.connect_to_server(self.active_server)
+            self.controller.connect_to_server(self.active_server)
 
         self.close()
 

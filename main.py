@@ -413,7 +413,12 @@ class PreferenceSettings(tk.Toplevel):
         self.parent = parent
         self.controller = controller
 
+        self.wm_title("Preferences Settings")
+        self.wm_geometry("600x400")
         self.protocol("WM_DELETE_WINDOW", self.close)
+
+        self.container = tk.Frame(self)
+        self.container.pack(side="top", fill="both", expand=True)
 
     def close(self):
 

@@ -20,7 +20,7 @@ class Messenger(tk.Tk):
 
         self.tk_setPalette(background=BACKGROUND_COLOUR)
 
-        tk.Tk.wm_title(self, "Woodpecker")
+        tk.Tk.wm_title(self, "Woodpecker Messenger")
         self.geometry('800x600')
         self.resizable(False, False)
 
@@ -107,13 +107,13 @@ class MainPage(tk.Frame):
         self.can_send = True
         self.status = 0
 
-        tk.Label(self, text="Woodpecker",
+        tk.Label(self, text="Woodpecker Messenger",
                  font=HEADING_FONT).grid(row=0, column=0, columnspan=3,
                                          pady=10, padx=20, sticky="nw")
         tk.Label(self, text="Online Users:",
                  font=HEADING_FONT).grid(row=0, column=3,
                                          pady=10, sticky="nw")
-        tk.Label(self, text="By Jamie, v0.6.0",
+        tk.Label(self, text="v0.8.0",
                  font=MEDIUM_FONT, fg=DARK_TEXT_COLOUR).grid(row=6, column=0, sticky="nw", pady=10, padx=20)
 
         self.error_message = tk.Label(self, text="",

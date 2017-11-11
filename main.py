@@ -309,23 +309,6 @@ class ServerSettings(tk.Toplevel):
 
         self.protocol("WM_DELETE_WINDOW", self.close)
 
-    def close(self):
-
-        self.parent.server_settings_open = False
-        self.destroy()
-
-
-class StyleSettings(tk.Toplevel):
-
-    def __init__(self, parent, controller):
-
-        tk.Toplevel.__init__(self)
-
-        self.parent = parent
-        self.controller = controller
-
-        self.protocol("WM_DELETE_WINDOW", self.close)
-
         self.container = tk.Frame(self)
         self.container.pack(side="top", fill="both", expand=True)
 
@@ -346,6 +329,25 @@ class StyleSettings(tk.Toplevel):
 
         self.display = tk.Text(self.container)
         self.display.grid(row=0, column=1, rowspan=4)
+
+        self.container.tkraise()
+
+    def close(self):
+
+        self.parent.server_settings_open = False
+        self.destroy()
+
+
+class StyleSettings(tk.Toplevel):
+
+    def __init__(self, parent, controller):
+
+        tk.Toplevel.__init__(self)
+
+        self.parent = parent
+        self.controller = controller
+
+        self.protocol("WM_DELETE_WINDOW", self.close)
 
     def close(self):
 

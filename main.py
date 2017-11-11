@@ -221,8 +221,9 @@ class MainPage(tk.Frame):
 
             self.entry.delete("1.0", tk.END)
 
-            self.can_send = False
-            self.controller.after(2000, self.allow_message)
+            if prefix:
+                self.can_send = False
+                self.controller.after(2000, self.allow_message)
 
             return
 
@@ -261,8 +262,9 @@ class MainPage(tk.Frame):
 
         self.entry.delete("1.0", tk.END)
 
-        self.can_send = False
-        self.controller.after(2000, self.allow_message)
+        if prefix:
+            self.can_send = False
+            self.controller.after(2000, self.allow_message)
 
     def refresh(self):
 

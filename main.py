@@ -326,6 +326,27 @@ class StyleSettings(tk.Toplevel):
 
         self.protocol("WM_DELETE_WINDOW", self.close)
 
+        self.container = tk.Frame(self)
+        self.container.pack(side="top", fill="both", expand=True)
+
+        self.container.grid_rowconfigure(0, weight=1)
+        self.container.grid_columnconfigure(0, weight=1)
+
+        self.add_button = tk.Button(self.container)
+        self.add_button.grid(row=0, column=0)
+
+        self.edit_button = tk.Button(self.container)
+        self.edit_button.grid(row=1, column=0)
+
+        self.set_button = tk.Button(self.container)
+        self.set_button.grid(row=2, column=0)
+
+        self.remove_button = tk.Button(self.container)
+        self.remove_button.grid(row=3, column=0)
+
+        self.display = tk.Text(self.container)
+        self.display.grid(row=0, column=1, rowspan=4)
+
     def close(self):
 
         self.parent.style_settings_open = False

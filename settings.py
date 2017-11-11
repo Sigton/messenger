@@ -1,7 +1,7 @@
 
 # "//H023FILESRV01/OldPupilSHare/slamjam/messenger/defaultserver.json"
 
-FILE_PATH = None  # "D:/messenger servers/defaultserver.db"
+FILE_PATH = "D:/messenger servers/defaultserver.db"
 
 MESSAGE_AMOUNT_THRESHOLD = 20
 MESSAGE_LENGTH_THRESHOLD = 100

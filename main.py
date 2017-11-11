@@ -440,6 +440,9 @@ class PreferenceSettings(tk.Toplevel):
                                      bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)
         self.load_button.grid(row=1, column=1, pady=20, sticky='ew', ipady=5)
 
+        if FILE_PATH is not None:
+            self.entry.insert(tk.END, FILE_PATH)
+
     def close(self):
 
         self.parent.preference_settings_open = False

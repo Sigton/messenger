@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import filedialog
 
 import datetime
 import sqlite3
@@ -20,6 +21,7 @@ class Messenger(tk.Tk):
             self.db = None
         
         self.username = ""
+        self.preference_file = None
 
         self.tk_setPalette(background=BACKGROUND_COLOUR)
 
@@ -433,15 +435,25 @@ class PreferenceSettings(tk.Toplevel):
         self.entry.grid(row=0, column=0, columnspan=2, pady=20, padx=20, sticky="ew")
 
         self.browse_button = tk.Button(self.container, text="Browse", width=12,
-                                       bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)
+                                       bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT,
+                                       command=self.select_preference_file)
         self.browse_button.grid(row=1, column=0, pady=20, sticky='ew', ipady=5)
 
         self.load_button = tk.Button(self.container, text="Load", width=12,
                                      bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)
         self.load_button.grid(row=1, column=1, pady=20, sticky='ew', ipady=5)
 
-        if FILE_PATH is not None:
-            self.entry.insert(tk.END, FILE_PATH)
+        if self.controller.preference_file is not None:
+            self.entry.insert(tk.END, self.controller.preference_file)
+
+    def select_preference_file(self):
+
+        self.controller.preference_file = filedialog.askopenfilename(title="Select Preference File",
+                                                                     filetypes=(("json files", "*.json"),
+                                                                                ("all files", "*.*")))
+        if self.controller.preference_file is not None:
+            self.entry.delete(0, tk.END)
+            self.entry.insert(tk.END, self.controller.preference_file)
 
     def close(self):
 

@@ -57,8 +57,17 @@ class Messenger(tk.Tk):
 
     def connect_to_server(self, server_index):
 
+        if self.db is not None:
+            self.send_message(self.controller.username + " has went offline.", False)
+
+            self.controller.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.controller.username,))
+
+            self.controller.db.commit()
+            self.controller.db.close()
+
         self.db = sqlite3.connect(self.servers[server_index][1])
         self.cursor = self.db.cursor()
+        self.frames[MainPage].setup()
 
 
 class LoginPage(tk.Frame):

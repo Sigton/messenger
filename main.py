@@ -412,8 +412,9 @@ class ServerSettings(tk.Toplevel):
         self.display.grid(row=0, column=1, rowspan=10, sticky="e")
 
         self.server_buttons = []
-        self.active_server = 0
-        self.selected_server = 0
+        if self.controller.db is None:
+            self.active_server = None
+        self.selected_server = None
 
         self.update_server_list()
 
@@ -433,8 +434,9 @@ class ServerSettings(tk.Toplevel):
             self.display.window_create(tk.END, window=self.server_buttons[-1])
             n += 1
 
-        self.server_buttons[self.active_server].config(bg=SELECTED_BUTTON_COLOUR,
-                                                       activebackground=SELECTED_BUTTON_ACTIVE_COLOUR)
+        if self.active_server is not None:
+            self.server_buttons[self.active_server].config(bg=SELECTED_BUTTON_COLOUR,
+                                                           activebackground=SELECTED_BUTTON_ACTIVE_COLOUR)
         self.server_buttons[self.selected_server].config(fg=SELECTED_TEXT_COLOUR)
 
         self.display.config(state="disabled")

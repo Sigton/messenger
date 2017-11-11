@@ -420,6 +420,15 @@ class PreferenceSettings(tk.Toplevel):
         self.container = tk.Frame(self)
         self.container.pack(side="top", fill="both", expand=True)
 
+        self.entry = tk.Entry(self.container)
+        self.entry.grid(row=0, column=0, columnspan=2)
+
+        self.browse_button = tk.Button(self.container, text="Browse")
+        self.browse_button.grid(row=1, column=0)
+
+        self.load_button = tk.Button(self.container, text="Load")
+        self.load_button.grid(row=1, column=1)
+
     def close(self):
 
         self.parent.preference_settings_open = False

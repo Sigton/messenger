@@ -215,9 +215,6 @@ class MainPage(tk.Frame):
     def send_message(self, message, prefix=True):
 
         if self.controller.db is None:
-            self.error_message.config(
-                text="No server selected!".format(MESSAGE_LENGTH_THRESHOLD)
-            )
 
             self.entry.delete("1.0", tk.END)
 

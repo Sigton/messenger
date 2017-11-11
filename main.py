@@ -313,9 +313,6 @@ class ServerSettings(tk.Toplevel):
         self.container = tk.Frame(self)
         self.container.pack(side="top", fill="both", expand=True)
 
-        self.container.grid_rowconfigure(0, weight=1)
-        self.container.grid_columnconfigure(0, weight=1)
-
         self.add_button = tk.Button(self.container, width=20)
         self.add_button.grid(row=0, column=0, padx=10)
 
@@ -328,8 +325,8 @@ class ServerSettings(tk.Toplevel):
         self.remove_button = tk.Button(self.container, width=20)
         self.remove_button.grid(row=3, column=0, padx=10)
 
-        self.display = tk.Text(self.container, width=50)
-        self.display.grid(row=0, column=1, rowspan=4, sticky="e")
+        self.display = tk.Text(self.container, width=54, height=25)
+        self.display.grid(row=0, column=1, rowspan=16, sticky="e")
 
     def close(self):
 

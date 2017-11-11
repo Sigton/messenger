@@ -15,14 +15,10 @@ class Messenger(tk.Tk):
 
         tk.Tk.__init__(self, *args, **kwargs)
 
-        if FILE_PATH is not None:
-            self.db = sqlite3.connect(FILE_PATH)
-            self.cursor = self.db.cursor()
-        else:
-            self.db = None
-            self.cursor = None
+        self.db = None
+        self.cursor = None
 
-        self.active_server = ""
+        self.active_server = None
         
         self.username = ""
         self.servers = []
@@ -61,7 +57,7 @@ class Messenger(tk.Tk):
     def connect_to_server(self, server_index):
 
         if self.db is not None:
-            self.send_message(self.controller.username + " has went offline.", False)
+            self.frames[MainPage].send_message(self.controller.username + " has went offline.", False)
 
             self.controller.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.controller.username,))
 
@@ -70,13 +66,13 @@ class Messenger(tk.Tk):
 
         self.db = sqlite3.connect(self.servers[server_index][1])
         self.cursor = self.db.cursor()
-        self.active_server = self.servers[server_index][0]
+        self.active_server = server_index
         self.frames[MainPage].setup()
 
     def disconnect(self):
 
         if self.db is not None:
-            self.send_message(self.controller.username + " has went offline.", False)
+            self.frames[MainPage].send_message(self.controller.username + " has went offline.", False)
 
             self.controller.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.controller.username,))
 
@@ -85,6 +81,7 @@ class Messenger(tk.Tk):
 
         self.db = None
         self.cursor = None
+        self.active_server = None
         self.frames[MainPage].setup()
 
 
@@ -433,7 +430,7 @@ class ServerSettings(tk.Toplevel):
         if self.controller.db is None:
             self.active_server = None
         else:
-            self.active_server =
+            self.active_server = self.controller.active_server
         self.selected_server = None
 
         self.update_server_list()

@@ -57,9 +57,9 @@ class Messenger(tk.Tk):
     def connect_to_server(self, server_index):
 
         if self.db is not None:
-            self.frames[MainPage].send_message(self.controller.username + " has went offline.", False)
+            self.frames[MainPage].send_message(self.username + " has went offline.", False)
 
-            self.controller.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.controller.username,))
+            self.controller.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.username,))
 
             self.controller.db.commit()
             self.controller.db.close()
@@ -72,9 +72,9 @@ class Messenger(tk.Tk):
     def disconnect(self):
 
         if self.db is not None:
-            self.frames[MainPage].send_message(self.controller.username + " has went offline.", False)
+            self.frames[MainPage].send_message(self.username + " has went offline.", False)
 
-            self.controller.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.controller.username,))
+            self.controller.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.username,))
 
             self.controller.db.commit()
             self.controller.db.close()

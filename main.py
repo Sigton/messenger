@@ -4,6 +4,7 @@ from tkinter import filedialog
 
 import datetime
 import sqlite3
+import json
 
 from settings import *
 
@@ -21,6 +22,7 @@ class Messenger(tk.Tk):
             self.db = None
         
         self.username = ""
+        self.servers = []
         self.preference_file = None
 
         self.tk_setPalette(background=BACKGROUND_COLOUR)
@@ -454,6 +456,13 @@ class PreferenceSettings(tk.Toplevel):
         if self.controller.preference_file is not "":
             self.entry.delete(0, tk.END)
             self.entry.insert(tk.END, self.controller.preference_file)
+
+    def load_preferences(self):
+
+        with open(self.controller.preference_file, 'r') as infile:
+            data = json.load(infile)
+
+        self.controller.servers = data["servers"]
 
     def close(self):
 

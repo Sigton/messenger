@@ -20,6 +20,9 @@ class Messenger(tk.Tk):
             self.cursor = self.db.cursor()
         else:
             self.db = None
+            self.cursor = None
+
+        self.active_server = ""
         
         self.username = ""
         self.servers = []
@@ -67,6 +70,21 @@ class Messenger(tk.Tk):
 
         self.db = sqlite3.connect(self.servers[server_index][1])
         self.cursor = self.db.cursor()
+        self.active_server = self.servers[server_index][0]
+        self.frames[MainPage].setup()
+
+    def disconnect(self):
+
+        if self.db is not None:
+            self.send_message(self.controller.username + " has went offline.", False)
+
+            self.controller.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.controller.username,))
+
+            self.controller.db.commit()
+            self.controller.db.close()
+
+        self.db = None
+        self.cursor = None
         self.frames[MainPage].setup()
 
 
@@ -414,6 +432,8 @@ class ServerSettings(tk.Toplevel):
         self.server_buttons = []
         if self.controller.db is None:
             self.active_server = None
+        else:
+            self.active_server =
         self.selected_server = None
 
         self.update_server_list()
@@ -467,6 +487,10 @@ class ServerSettings(tk.Toplevel):
         del self.controller.servers[self.selected_server]
 
         self.update_server_list()
+
+        if self.selected_server == self.active_server:
+            self.controller.disconnect()
+            self.close()
 
 
 class StyleSettings(tk.Toplevel):

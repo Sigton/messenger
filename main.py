@@ -451,7 +451,7 @@ class PreferenceSettings(tk.Toplevel):
         self.controller.preference_file = filedialog.askopenfilename(title="Select Preference File",
                                                                      filetypes=(("json files", "*.json"),
                                                                                 ("all files", "*.*")))
-        if self.controller.preference_file is not None:
+        if self.controller.preference_file is not "":
             self.entry.delete(0, tk.END)
             self.entry.insert(tk.END, self.controller.preference_file)
 

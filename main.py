@@ -345,13 +345,10 @@ class MainPage(tk.Frame):
             self.preference_settings = PreferenceSettings(self, self.controller)
 
     def load_preferences(self):
-        try:
-            with open(self.controller.preference_file, 'r') as infile:
-                data = json.load(infile)
+        with open(self.controller.preference_file, 'r') as infile:
+            data = json.load(infile)
 
-            self.controller.servers = data["servers"]
-        except Exception:
-            messagebox.showerror("Loading Failed", "Failed to load preferences, invalid save file.")
+        self.controller.servers = data["servers"]
 
     def save_preferences(self):
         with open(self.controller.preference_file, 'w') as outfile:
@@ -395,9 +392,19 @@ class ServerSettings(tk.Toplevel):
                                bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT, state="disabled")
         self.display.grid(row=0, column=1, rowspan=10, sticky="e")
 
+        self.server_buttons = []
+        self.update_server_list()
+
     def update_server_list(self):
 
-        pass
+        self.display.config(state="normal")
+
+        for server in self.controller.servers:
+
+            self.server_buttons += [tk.Button(self.display, text="{}: {}".format(server[0], server[1]))]
+            self.display.window_create(tk.END, window=self.server_buttons[-1])
+
+        self.display.config(state="disabled")
 
     def close(self):
 

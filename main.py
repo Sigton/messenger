@@ -384,7 +384,8 @@ class ServerSettings(tk.Toplevel):
         self.edit_button.grid(row=1, column=0, padx=10, ipady=10)
 
         self.set_button = tk.Button(self.container, text="Set Server", width=20, bg=BUTTON_COLOUR,
-                                    activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)
+                                    activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT,
+                                    command=self.set_active_server)
         self.set_button.grid(row=2, column=0, padx=10, ipady=10)
 
         self.remove_button = tk.Button(self.container, text="Remove Server", width=20, bg=BUTTON_COLOUR,
@@ -413,7 +414,7 @@ class ServerSettings(tk.Toplevel):
 
             self.server_buttons += [tk.Button(self.display, text=server[0], width=49, bg=BUTTON_COLOUR,
                                               activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT,
-                                              command=lambda x=n: self.update_active_button(x))]
+                                              command=lambda x=n: self.update_selected_button(x))]
             self.display.window_create(tk.END, window=self.server_buttons[-1])
             n += 1
 
@@ -428,9 +429,14 @@ class ServerSettings(tk.Toplevel):
         self.parent.server_settings_open = False
         self.destroy()
 
-    def update_active_button(self, button_index):
+    def update_selected_button(self, button_index):
 
-        pass
+        self.selected_server = button_index
+        self.update_server_list()
+
+    def set_active_server(self):
+
+        self.active_server = self.selected_server
 
 
 class StyleSettings(tk.Toplevel):

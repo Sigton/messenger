@@ -281,5 +281,12 @@ class MainPage(tk.Frame):
             self.controller.db.commit()
 
 
+class ServerSettings(tk.Toplevel):
+
+    def __init__(self):
+
+        tk.Toplevel.__init__(self)
+
+
 app = Messenger()
 app.mainloop()

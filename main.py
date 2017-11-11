@@ -408,11 +408,14 @@ class ServerSettings(tk.Toplevel):
         self.server_buttons = []
         self.display.delete("1.0", tk.END)
 
+        n = 0
         for server in self.controller.servers:
 
             self.server_buttons += [tk.Button(self.display, text=server[0], width=49, bg=BUTTON_COLOUR,
-                                              activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)]
+                                              activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT,
+                                              command=lambda x=n: self.update_active_button(x))]
             self.display.window_create(tk.END, window=self.server_buttons[-1])
+            n += 1
 
         self.server_buttons[self.active_server].config(bg=SELECTED_BUTTON_COLOUR,
                                                        activebackground=SELECTED_BUTTON_ACTIVE_COLOUR)
@@ -424,6 +427,10 @@ class ServerSettings(tk.Toplevel):
 
         self.parent.server_settings_open = False
         self.destroy()
+
+    def update_active_button(self, button_index):
+
+        pass
 
 
 class StyleSettings(tk.Toplevel):

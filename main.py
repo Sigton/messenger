@@ -443,7 +443,8 @@ class PreferenceSettings(tk.Toplevel):
         self.browse_button.grid(row=1, column=0, pady=20, sticky='ew', ipady=5)
 
         self.load_button = tk.Button(self.container, text="Load", width=12,
-                                     bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)
+                                     bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT,
+                                     command=self.load_preferences)
         self.load_button.grid(row=1, column=1, pady=20, sticky='ew', ipady=5)
 
         self.save_button = tk.Button(self.container, text="Save", width=12,

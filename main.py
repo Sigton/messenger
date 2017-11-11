@@ -396,6 +396,9 @@ class ServerSettings(tk.Toplevel):
         self.display.grid(row=0, column=1, rowspan=10, sticky="e")
 
         self.server_buttons = []
+        self.active_server = 0
+        self.selected_server = 0
+
         self.update_server_list()
 
     def update_server_list(self):
@@ -404,8 +407,10 @@ class ServerSettings(tk.Toplevel):
 
         for server in self.controller.servers:
 
-            self.server_buttons += [tk.Button(self.display, text=server[0], width=40)]
+            self.server_buttons += [tk.Button(self.display, text=server[0], width=56)]
             self.display.window_create(tk.END, window=self.server_buttons[-1])
+
+        self.server_buttons[self.active_server].config()
 
         self.display.config(state="disabled")
 

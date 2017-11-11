@@ -104,8 +104,12 @@ class MainPage(tk.Frame):
         self.parent = parent
         self.controller = controller
 
+        self.server_settings = None
+        self.style_settings = None
+
         self.can_send = True
         self.status = 0
+        self.server_settings_open = False
 
         tk.Label(self, text="Woodpecker Messenger",
                  font=HEADING_FONT).grid(row=0, column=0, columnspan=3,
@@ -282,7 +286,9 @@ class MainPage(tk.Frame):
 
     def open_server_settings(self):
 
-        pass
+        if not self.server_settings_open:
+            self.server_settings_open = True
+            self.server_settings = ServerSettings(self, self.controller)
 
 
 class ServerSettings(tk.Toplevel):

@@ -474,7 +474,7 @@ class PreferenceSettings(tk.Toplevel):
 
         self.load_button = tk.Button(self.container, text="Load", width=12,
                                      bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT,
-                                     command=self.parent.load_preferences)
+                                     command=self.load_preferences)
         self.load_button.grid(row=1, column=1, pady=20, sticky='ew', ipady=5)
 
         self.save_button = tk.Button(self.container, text="Save", width=12,
@@ -498,6 +498,11 @@ class PreferenceSettings(tk.Toplevel):
 
         self.parent.preference_settings_open = False
         self.destroy()
+
+    def load_preferences(self):
+
+        self.parent.load_preferences()
+        self.close()
 
 
 app = Messenger()

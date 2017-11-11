@@ -55,6 +55,11 @@ class Messenger(tk.Tk):
         frame.tkraise()
         frame.setup()
 
+    def connect_to_server(self, server_index):
+
+        self.db = sqlite3.connect(self.servers[server_index][1])
+        self.cursor = self.db.cursor()
+
 
 class LoginPage(tk.Frame):
 
@@ -438,6 +443,10 @@ class ServerSettings(tk.Toplevel):
 
         self.active_server = self.selected_server
         self.update_server_list()
+
+        self.controller.connect_to_server(self.active_server)
+
+        self.close()
 
 
 class StyleSettings(tk.Toplevel):

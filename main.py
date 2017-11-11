@@ -350,6 +350,10 @@ class MainPage(tk.Frame):
 
         self.controller.servers = data["servers"]
 
+    def save_preferences(self):
+        with open(self.controller.preference_file, 'w') as outfile:
+            json.dump({"servers": self.controller.servers}, outfile)
+
 
 class ServerSettings(tk.Toplevel):
 
@@ -454,7 +458,8 @@ class PreferenceSettings(tk.Toplevel):
         self.load_button.grid(row=1, column=1, pady=20, sticky='ew', ipady=5)
 
         self.save_button = tk.Button(self.container, text="Save", width=12,
-                                     bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)
+                                     bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT,
+                                     command=self.parent.save_preferences)
         self.save_button.grid(row=1, column=2, pady=20, sticky='ew', ipady=5)
 
         if self.controller.preference_file is not None:

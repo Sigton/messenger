@@ -432,9 +432,10 @@ class PreferenceSettings(tk.Toplevel):
         self.container.grid_rowconfigure(1, weight=1)
         self.container.grid_columnconfigure(0, weight=1)
         self.container.grid_columnconfigure(1, weight=1)
+        self.container.grid_columnconfigure(2, weight=1)
 
         self.entry = tk.Entry(self.container, width=20, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
-        self.entry.grid(row=0, column=0, columnspan=2, pady=20, padx=20, sticky="ew")
+        self.entry.grid(row=0, column=0, columnspan=3, pady=20, padx=20, sticky="ew")
 
         self.browse_button = tk.Button(self.container, text="Browse", width=12,
                                        bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT,
@@ -444,6 +445,10 @@ class PreferenceSettings(tk.Toplevel):
         self.load_button = tk.Button(self.container, text="Load", width=12,
                                      bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)
         self.load_button.grid(row=1, column=1, pady=20, sticky='ew', ipady=5)
+
+        self.save_button = tk.Button(self.container, text="Save", width=12,
+                                     bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)
+        self.save_button.grid(row=1, column=2, pady=20, sticky='ew', ipady=5)
 
         if self.controller.preference_file is not None:
             self.entry.insert(tk.END, self.controller.preference_file)

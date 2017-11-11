@@ -437,6 +437,7 @@ class ServerSettings(tk.Toplevel):
     def set_active_server(self):
 
         self.active_server = self.selected_server
+        self.update_server_list()
 
 
 class StyleSettings(tk.Toplevel):

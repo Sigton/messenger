@@ -350,7 +350,7 @@ class MainPage(tk.Frame):
                 data = json.load(infile)
 
             self.controller.servers = data["servers"]
-        except TypeError or json.decoder.JSONDecodeError:
+        except Exception:
             messagebox.showerror("Loading Failed", "Loading preferences failed, file is invalid.")
 
     def save_preferences(self):

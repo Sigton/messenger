@@ -307,6 +307,7 @@ class ServerSettings(tk.Toplevel):
         self.parent = parent
         self.controller = controller
 
+        self.wm_title("Server Settings")
         self.wm_geometry("600x400")
         self.protocol("WM_DELETE_WINDOW", self.close)
 

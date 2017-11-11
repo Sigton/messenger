@@ -407,7 +407,8 @@ class ServerSettings(tk.Toplevel):
 
         for server in self.controller.servers:
 
-            self.server_buttons += [tk.Button(self.display, text=server[0], width=56)]
+            self.server_buttons += [tk.Button(self.display, text=server[0], width=49, bg=BUTTON_COLOUR,
+                                              activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)]
             self.display.window_create(tk.END, window=self.server_buttons[-1])
 
         self.server_buttons[self.active_server].config()

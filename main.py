@@ -313,20 +313,24 @@ class ServerSettings(tk.Toplevel):
         self.container = tk.Frame(self)
         self.container.pack(side="top", fill="both", expand=True)
 
-        self.add_button = tk.Button(self.container, text="Add Server", width=20)
+        self.add_button = tk.Button(self.container, text="Add Server", width=20, bg=BUTTON_COLOUR,
+                                    activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)
         self.add_button.grid(row=0, column=0, padx=10)
 
-        self.edit_button = tk.Button(self.container, text="Edit Server", width=20)
+        self.edit_button = tk.Button(self.container, text="Edit Server", width=20, bg=BUTTON_COLOUR,
+                                     activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)
         self.edit_button.grid(row=1, column=0, padx=10)
 
-        self.set_button = tk.Button(self.container, text="Set Server", width=20)
+        self.set_button = tk.Button(self.container, text="Set Server", width=20, bg=BUTTON_COLOUR,
+                                    activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)
         self.set_button.grid(row=2, column=0, padx=10)
 
         self.remove_button = tk.Button(self.container, text="Remove Server", width=20, bg=BUTTON_COLOUR,
                                        activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)
         self.remove_button.grid(row=3, column=0, padx=10)
 
-        self.display = tk.Text(self.container, width=58, height=31, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
+        self.display = tk.Text(self.container, width=58, height=31,
+                               state="disabled", bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
         self.display.grid(row=0, column=1, rowspan=16, sticky="e")
 
     def close(self):

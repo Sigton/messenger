@@ -307,6 +307,7 @@ class ServerSettings(tk.Toplevel):
         self.parent = parent
         self.controller = controller
 
+        self.wm_geometry("600x400")
         self.protocol("WM_DELETE_WINDOW", self.close)
 
         self.container = tk.Frame(self)
@@ -315,22 +316,20 @@ class ServerSettings(tk.Toplevel):
         self.container.grid_rowconfigure(0, weight=1)
         self.container.grid_columnconfigure(0, weight=1)
 
-        self.add_button = tk.Button(self.container)
-        self.add_button.grid(row=0, column=0)
+        self.add_button = tk.Button(self.container, width=20)
+        self.add_button.grid(row=0, column=0, padx=10)
 
-        self.edit_button = tk.Button(self.container)
-        self.edit_button.grid(row=1, column=0)
+        self.edit_button = tk.Button(self.container, width=20)
+        self.edit_button.grid(row=1, column=0, padx=10)
 
-        self.set_button = tk.Button(self.container)
-        self.set_button.grid(row=2, column=0)
+        self.set_button = tk.Button(self.container, width=20)
+        self.set_button.grid(row=2, column=0, padx=10)
 
-        self.remove_button = tk.Button(self.container)
-        self.remove_button.grid(row=3, column=0)
+        self.remove_button = tk.Button(self.container, width=20)
+        self.remove_button.grid(row=3, column=0, padx=10)
 
-        self.display = tk.Text(self.container)
-        self.display.grid(row=0, column=1, rowspan=4)
-
-        self.container.tkraise()
+        self.display = tk.Text(self.container, width=50)
+        self.display.grid(row=0, column=1, rowspan=4, sticky="e")
 
     def close(self):
 

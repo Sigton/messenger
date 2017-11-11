@@ -414,20 +414,20 @@ class PreferenceSettings(tk.Toplevel):
         self.controller = controller
 
         self.wm_title("Preferences Settings")
-        self.wm_geometry("600x400")
+        self.wm_geometry("200x150")
         self.protocol("WM_DELETE_WINDOW", self.close)
 
         self.container = tk.Frame(self)
         self.container.pack(side="top", fill="both", expand=True)
 
-        self.entry = tk.Entry(self.container)
-        self.entry.grid(row=0, column=0, columnspan=2)
+        self.entry = tk.Entry(self.container, width=33)
+        self.entry.grid(row=0, column=0, columnspan=2, pady=20)
 
-        self.browse_button = tk.Button(self.container, text="Browse")
-        self.browse_button.grid(row=1, column=0)
+        self.browse_button = tk.Button(self.container, text="Browse", width=12)
+        self.browse_button.grid(row=1, column=0, pady=20, sticky='ew', ipady=5)
 
-        self.load_button = tk.Button(self.container, text="Load")
-        self.load_button.grid(row=1, column=1)
+        self.load_button = tk.Button(self.container, text="Load", width=12)
+        self.load_button.grid(row=1, column=1, pady=20, sticky='ew', ipady=5)
 
     def close(self):
 

@@ -59,10 +59,10 @@ class Messenger(tk.Tk):
         if self.db is not None:
             self.frames[MainPage].send_message(self.username + " has went offline.", False)
 
-            self.controller.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.username,))
+            self.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.username,))
 
-            self.controller.db.commit()
-            self.controller.db.close()
+            self.db.commit()
+            self.db.close()
 
         self.db = sqlite3.connect(self.servers[server_index][1])
         self.cursor = self.db.cursor()
@@ -74,10 +74,10 @@ class Messenger(tk.Tk):
         if self.db is not None:
             self.frames[MainPage].send_message(self.username + " has went offline.", False)
 
-            self.controller.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.username,))
+            self.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.username,))
 
-            self.controller.db.commit()
-            self.controller.db.close()
+            self.db.commit()
+            self.db.close()
 
         self.db = None
         self.cursor = None

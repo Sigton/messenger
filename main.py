@@ -331,8 +331,12 @@ class ServerSettings(tk.Toplevel):
         self.remove_button.grid(row=3, column=0, padx=10)
 
         self.display = tk.Text(self.container, width=58, height=31,
-                               state="disabled", bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
+                               bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT, state="disabled")
         self.display.grid(row=0, column=1, rowspan=16, sticky="e")
+
+    def update_server_list(self):
+
+        pass
 
     def close(self):
 

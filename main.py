@@ -405,6 +405,9 @@ class ServerSettings(tk.Toplevel):
 
         self.display.config(state="normal")
 
+        self.server_buttons = []
+        self.display.delete("1.0", tk.END)
+
         for server in self.controller.servers:
 
             self.server_buttons += [tk.Button(self.display, text=server[0], width=49, bg=BUTTON_COLOUR,
@@ -413,6 +416,7 @@ class ServerSettings(tk.Toplevel):
 
         self.server_buttons[self.active_server].config(bg=SELECTED_BUTTON_COLOUR,
                                                        activebackground=SELECTED_BUTTON_ACTIVE_COLOUR)
+        self.server_buttons[self.selected_server].config(fg=SELECTED_TEXT_COLOUR)
 
         self.display.config(state="disabled")
 

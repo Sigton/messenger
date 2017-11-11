@@ -411,7 +411,8 @@ class ServerSettings(tk.Toplevel):
                                               activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)]
             self.display.window_create(tk.END, window=self.server_buttons[-1])
 
-        self.server_buttons[self.active_server].config()
+        self.server_buttons[self.active_server].config(bg=SELECTED_BUTTON_COLOUR,
+                                                       activebackground=SELECTED_BUTTON_ACTIVE_COLOUR)
 
         self.display.config(state="disabled")
 

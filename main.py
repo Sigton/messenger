@@ -307,6 +307,13 @@ class ServerSettings(tk.Toplevel):
         self.parent = parent
         self.controller = controller
 
+        self.protocol("WM_DELETE_WINDOW", self.close)
+
+    def close(self):
+
+        self.parent.server_settings_open = False
+        self.destroy()
+
 
 class StyleSettings(tk.Toplevel):
 

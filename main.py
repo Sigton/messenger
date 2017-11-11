@@ -394,7 +394,8 @@ class ServerSettings(tk.Toplevel):
         self.set_button.grid(row=2, column=0, padx=10, ipady=10)
 
         self.remove_button = tk.Button(self.container, text="Remove Server", width=20, bg=BUTTON_COLOUR,
-                                       activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)
+                                       activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT,
+                                       command=self.remove_server)
         self.remove_button.grid(row=3, column=0, padx=10, ipady=10)
 
         self.display = tk.Text(self.container, width=58, height=31,
@@ -447,6 +448,13 @@ class ServerSettings(tk.Toplevel):
         self.controller.connect_to_server(self.active_server)
 
         self.close()
+
+    def remove_server(self):
+
+        del self.server_buttons[self.selected_server]
+        del self.controller.servers[self.selected_server]
+
+        self.update_server_list()
 
 
 class StyleSettings(tk.Toplevel):

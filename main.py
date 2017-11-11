@@ -13,8 +13,11 @@ class Messenger(tk.Tk):
 
         tk.Tk.__init__(self, *args, **kwargs)
 
-        self.db = sqlite3.connect(FILE_PATH)
-        self.cursor = self.db.cursor()
+        if FILE_PATH is not None:
+            self.db = sqlite3.connect(FILE_PATH)
+            self.cursor = self.db.cursor()
+        else:
+            self.db = None
         
         self.username = ""
 
@@ -75,16 +78,21 @@ class LoginPage(tk.Frame):
 
         if 2 < len(name) < 13:
 
-            self.controller.cursor.execute('''SELECT nickname FROM users''')
-            users = [user[0] for user in self.controller.cursor.fetchall()]
+            if self.controller.db is not None:
 
-            if name not in users:
+                self.controller.cursor.execute('''SELECT nickname FROM users''')
+                users = [user[0] for user in self.controller.cursor.fetchall()]
 
+                if name not in users:
+
+                    self.controller.username = self.name_entry.get()
+                    self.controller.show_frame(MainPage)
+
+                else:
+                    messagebox.showerror("Failed to Login", "That username is already taken!")
+            else:
                 self.controller.username = self.name_entry.get()
                 self.controller.show_frame(MainPage)
-
-            else:
-                messagebox.showerror("Failed to Login", "That username is already taken!")
 
         else:
             messagebox.showerror("Failed to Login", "Username has to be between 3 and 12 characters.")
@@ -171,6 +179,14 @@ class MainPage(tk.Frame):
 
     def send_message(self, message, prefix=True):
 
+        if self.controller.db is None:
+            self.entry.delete("1.0", tk.END)
+
+            self.can_send = False
+            self.controller.after(2000, self.allow_message)
+
+            return
+
         if message.strip("\n") == "" or not self.can_send:
             return
 
@@ -202,14 +218,24 @@ class MainPage(tk.Frame):
                                         self.controller.username, message, prefix))
         self.controller.db.commit()
 
-        self.entry.delete("1.0", tk.END)
-
         self.refresh()
+
+        self.entry.delete("1.0", tk.END)
 
         self.can_send = False
         self.controller.after(2000, self.allow_message)
 
     def refresh(self):
+
+        if self.controller.db is None:
+            self.display.config(state="normal")
+
+            self.display.delete('1.0', tk.END)
+            self.display.insert(tk.END, "No Server Selected!")
+
+            self.display.config(state="disabled")
+
+            return
 
         self.controller.cursor.execute('''SELECT time, name, message, prefix FROM messages''')
         messages = self.controller.cursor.fetchall()[-20:]
@@ -241,6 +267,9 @@ class MainPage(tk.Frame):
 
     def set_online(self):
 
+        if self.controller.db is None:
+            return
+
         self.controller.cursor.execute('''SELECT nickname, status FROM users''')
         users = self.controller.cursor.fetchall()
 
@@ -251,15 +280,16 @@ class MainPage(tk.Frame):
                                               VALUES(?,?)''', (self.controller.username, 1))
 
     def logoff(self):
-            
-        self.send_message(self.controller.username + " has went offline.", False)
 
-        self.controller.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.controller.username,))
+        if self.controller.db is not None:
+            self.send_message(self.controller.username + " has went offline.", False)
 
-        self.controller.db.commit()
+            self.controller.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.controller.username,))
+
+            self.controller.db.commit()
+            self.controller.db.close()
 
         self.controller.destroy()
-        self.controller.db.close()
 
     def auto_refresh(self):
 
@@ -274,14 +304,14 @@ class MainPage(tk.Frame):
 
     def set_status_away(self, event):
 
-        if event.widget == self.controller:
+        if event.widget == self.controller and self.controller.db is not None:
             self.controller.cursor.execute('''UPDATE users SET status = 0 WHERE nickname = ?''',
                                            (self.controller.username,))
             self.controller.db.commit()
 
     def set_status_here(self, event):
 
-        if event.widget == self.controller:
+        if event.widget == self.controller and self.controller.db is not None:
             self.controller.cursor.execute('''UPDATE users SET status = 1 WHERE nickname = ?''',
                                            (self.controller.username,))
             self.controller.db.commit()

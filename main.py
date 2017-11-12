@@ -505,7 +505,7 @@ class ServerSettings(tk.Toplevel):
             self.controller.disconnect()
             self.close()
 
-        while self.selected_server > len(self.controller.servers):
+        while self.selected_server > len(self.controller.servers)-1:
             self.selected_server -= 1
 
         self.update_server_list()

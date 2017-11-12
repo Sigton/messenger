@@ -479,6 +479,8 @@ class ServerSettings(tk.Toplevel):
 
         if self.selected_server is None:
             return
+        if not len(self.controller.servers):
+            return
 
         if not self.active_server == self.selected_server:
             self.active_server = self.selected_server
@@ -491,6 +493,8 @@ class ServerSettings(tk.Toplevel):
     def remove_server(self):
 
         if self.selected_server is None:
+            return
+        if not len(self.controller.servers):
             return
 
         del self.server_buttons[self.selected_server]

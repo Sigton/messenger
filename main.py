@@ -594,5 +594,15 @@ class PreferenceSettings(tk.Toplevel):
         self.close()
 
 
+class ServerInfo(tk.Toplevel):
+
+    def __init__(self, parent, controller):
+
+        tk.Toplevel.__init__(self)
+
+        self.parent = parent
+        self.controller = controller
+
+
 app = Messenger()
 app.mainloop()

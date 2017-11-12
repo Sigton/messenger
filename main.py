@@ -603,6 +603,17 @@ class ServerInfo(tk.Toplevel):
         self.parent = parent
         self.controller = controller
 
+        self.wm_title("Server Info")
+        self.wm_geometry("200x150")
+        self.protocol("WM_DELETE_WINDOW", self.close)
+
+        self.resizable(False, False)
+
+    def close(self):
+
+        self.parent.server_info_open = False
+        self.destroy()
+
 
 app = Messenger()
 app.mainloop()

@@ -490,6 +490,9 @@ class ServerSettings(tk.Toplevel):
 
     def remove_server(self):
 
+        if self.selected_server is None:
+            return
+
         del self.server_buttons[self.selected_server]
         del self.controller.servers[self.selected_server]
 

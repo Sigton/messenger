@@ -477,6 +477,9 @@ class ServerSettings(tk.Toplevel):
 
     def set_active_server(self):
 
+        if self.selected_server is None:
+            return
+
         if not self.active_server == self.selected_server:
             self.active_server = self.selected_server
             self.update_server_list()
@@ -493,6 +496,7 @@ class ServerSettings(tk.Toplevel):
         self.update_server_list()
 
         if self.selected_server == self.active_server:
+            self.selected_server = None
             self.controller.disconnect()
             self.close()
 

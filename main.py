@@ -395,6 +395,9 @@ class ServerSettings(tk.Toplevel):
         self.parent = parent
         self.controller = controller
 
+        self.server_info = None
+        self.server_info_open = False
+
         self.wm_title("Server Settings")
         self.wm_geometry("600x400")
         self.protocol("WM_DELETE_WINDOW", self.close)
@@ -509,6 +512,12 @@ class ServerSettings(tk.Toplevel):
             self.selected_server -= 1
 
         self.update_server_list()
+
+    def open_server_info(self):
+
+        if not self.server_info_open:
+            self.server_info_open = True
+            self.server_info = ServerInfo(self, self.controller)
 
 
 class StyleSettings(tk.Toplevel):

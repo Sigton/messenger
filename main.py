@@ -450,11 +450,18 @@ class ServerSettings(tk.Toplevel):
             self.display.window_create(tk.END, window=self.server_buttons[-1])
             n += 1
 
-        if self.active_server is not None:
-            self.server_buttons[self.active_server].config(bg=SELECTED_BUTTON_COLOUR,
-                                                           activebackground=SELECTED_BUTTON_ACTIVE_COLOUR)
-        if self.selected_server is not None:
-            self.server_buttons[self.selected_server].config(fg=SELECTED_TEXT_COLOUR)
+        try:
+            if self.active_server is not None:
+                self.server_buttons[self.active_server].config(bg=SELECTED_BUTTON_COLOUR,
+                                                               activebackground=SELECTED_BUTTON_ACTIVE_COLOUR)
+        except IndexError:
+            pass
+
+        try:
+            if self.selected_server is not None:
+                self.server_buttons[self.selected_server].config(fg=SELECTED_TEXT_COLOUR)
+        except IndexError:
+            pass
 
         self.display.config(state="disabled")
 

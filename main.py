@@ -500,12 +500,15 @@ class ServerSettings(tk.Toplevel):
         del self.server_buttons[self.selected_server]
         del self.controller.servers[self.selected_server]
 
-        self.update_server_list()
-
         if self.selected_server == self.active_server:
             self.selected_server = None
             self.controller.disconnect()
             self.close()
+
+        while self.selected_server > len(self.controller.servers):
+            self.selected_server -= 1
+
+        self.update_server_list()
 
 
 class StyleSettings(tk.Toplevel):

@@ -623,6 +623,9 @@ class ServerInfo(tk.Toplevel):
 
         self.resizable(False, False)
 
+        self.container = tk.Frame(self)
+        self.container.pack(side="top", fill="both", expand=True)
+
     def close(self):
 
         self.parent.server_info_open = False

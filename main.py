@@ -632,20 +632,20 @@ class ServerInfo(tk.Toplevel):
         self.container.grid_columnconfigure(0, weight=1)
         self.container.grid_columnconfigure(1, weight=1)
 
-        tk.Label(self.container, text="Server Name:", font=MEDIUM_FONT).grid(row=0, column=0)
-        tk.Label(self.container, text="Server Address:", font=MEDIUM_FONT).grid(row=1, column=0)
+        tk.Label(self.container, text="Server Name:", font=MEDIUM_FONT).grid(row=0, column=0, sticky="e")
+        tk.Label(self.container, text="Server Address:", font=MEDIUM_FONT).grid(row=1, column=0, sticky="e")
 
         self.name_entry = tk.Entry(self.container)
-        self.name_entry.grid(row=0, column=1)
+        self.name_entry.grid(row=0, column=1, sticky="w")
 
         self.address_entry = tk.Entry(self.container)
-        self.address_entry.grid(row=1, column=1)
+        self.address_entry.grid(row=1, column=1, sticky="w")
 
         self.add_button = tk.Button(self.container, text="Add")
-        self.add_button.grid(row=2, column=0)
+        self.add_button.grid(row=2, column=0, ipady=10, sticky="ew")
 
         self.cancel_button = tk.Button(self.container, text="Cancel")
-        self.cancel_button.grid(row=2, column=1)
+        self.cancel_button.grid(row=2, column=1, ipady=10, sticky="ew")
 
     def close(self):
 

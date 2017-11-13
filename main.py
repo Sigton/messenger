@@ -408,7 +408,7 @@ class ServerSettings(tk.Toplevel):
 
         self.add_button = tk.Button(self.container, text="Add Server", width=20, bg=BUTTON_COLOUR,
                                     activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT,
-                                    command=self.add_server)
+                                    command=self.open_server_info())
         self.add_button.grid(row=0, column=0, padx=10, ipady=10)
 
         self.edit_button = tk.Button(self.container, text="Edit Server", width=20, bg=BUTTON_COLOUR,
@@ -514,9 +514,9 @@ class ServerSettings(tk.Toplevel):
 
         self.update_server_list()
 
-    def add_server(self):
+    def add_server(self, name, address):
 
-        self.open_server_info()
+        pass
 
     def open_server_info(self):
 

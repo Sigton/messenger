@@ -510,7 +510,7 @@ class ServerSettings(tk.Toplevel):
             self.close()
 
         if len(self.controller.servers) == 0:
-            self.selecetd_server = 0 
+            self.selected_server = 0
         else:
             while self.selected_server > len(self.controller.servers)-1:
                 self.selected_server -= 1

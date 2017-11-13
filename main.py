@@ -642,8 +642,7 @@ class ServerInfo(tk.Toplevel):
         self.address_entry.grid(row=1, column=1, sticky="w")
 
         self.add_button = tk.Button(self.container,
-                                    font=MEDIUM_FONT, bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR,
-                                    command=lambda: self.add_server(self.name_entry.get(), self.address_entry.get()))
+                                    font=MEDIUM_FONT, bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR)
         self.add_button.grid(row=2, column=0, ipady=10, sticky="ew")
 
         self.cancel_button = tk.Button(self.container, text="Cancel",
@@ -663,7 +662,8 @@ class AddServer(ServerInfo):
 
         ServerInfo.__init__(self, parent, controller)
 
-        self.add_button.config(text="Add")
+        self.add_button.config(text="Add",
+                               command=lambda: self.add_server(self.name_entry.get(), self.address_entry.get()))
 
     def add_server(self, name, address):
 

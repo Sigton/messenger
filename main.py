@@ -529,7 +529,7 @@ class ServerSettings(tk.Toplevel):
 
     def edit_server(self):
 
-        if self.active_server is None:
+        if self.selected_server is None:
             return
 
         self.open_server_info(1)

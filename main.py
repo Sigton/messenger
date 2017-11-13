@@ -626,6 +626,12 @@ class ServerInfo(tk.Toplevel):
         self.container = tk.Frame(self)
         self.container.pack(side="top", fill="both", expand=True)
 
+        self.container.grid_rowconfigure(0, weight=1)
+        self.container.grid_rowconfigure(1, weight=1)
+        self.container.grid_rowconfigure(2, weight=1)
+        self.container.grid_columnconfigure(0, weight=1)
+        self.container.grid_columnconfigure(1, weight=1)
+
     def close(self):
 
         self.parent.server_info_open = False

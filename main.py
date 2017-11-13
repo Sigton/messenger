@@ -408,11 +408,12 @@ class ServerSettings(tk.Toplevel):
 
         self.add_button = tk.Button(self.container, text="Add Server", width=20, bg=BUTTON_COLOUR,
                                     activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT,
-                                    command=lambda:self.open_server_info(0))
+                                    command=lambda: self.open_server_info(0))
         self.add_button.grid(row=0, column=0, padx=10, ipady=10)
 
         self.edit_button = tk.Button(self.container, text="Edit Server", width=20, bg=BUTTON_COLOUR,
-                                     activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)
+                                     activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT,
+                                     command=self.edit_server)
         self.edit_button.grid(row=1, column=0, padx=10, ipady=10)
 
         self.set_button = tk.Button(self.container, text="Join Server", width=20, bg=BUTTON_COLOUR,
@@ -523,6 +524,15 @@ class ServerSettings(tk.Toplevel):
             self.server_info_open = True
             if not method:
                 self.server_info = AddServer(self, self.controller)
+            else:
+                self.server_info = EditServer(self, self.controller)
+
+    def edit_server(self):
+
+        if self.active_server is None:
+            return
+
+        self.open_server_info(1)
 
 
 class StyleSettings(tk.Toplevel):

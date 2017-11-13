@@ -408,14 +408,14 @@ class ServerSettings(tk.Toplevel):
 
         self.add_button = tk.Button(self.container, text="Add Server", width=20, bg=BUTTON_COLOUR,
                                     activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT,
-                                    command=self.open_server_info)
+                                    command=lambda:self.open_server_info(0))
         self.add_button.grid(row=0, column=0, padx=10, ipady=10)
 
         self.edit_button = tk.Button(self.container, text="Edit Server", width=20, bg=BUTTON_COLOUR,
                                      activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT)
         self.edit_button.grid(row=1, column=0, padx=10, ipady=10)
 
-        self.set_button = tk.Button(self.container, text="Set Server", width=20, bg=BUTTON_COLOUR,
+        self.set_button = tk.Button(self.container, text="Join Server", width=20, bg=BUTTON_COLOUR,
                                     activebackground=BUTTON_ACTIVE_COLOUR, font=MEDIUM_FONT,
                                     command=self.set_active_server)
         self.set_button.grid(row=2, column=0, padx=10, ipady=10)
@@ -509,20 +509,20 @@ class ServerSettings(tk.Toplevel):
             self.controller.disconnect()
             self.close()
 
-        while self.selected_server > len(self.controller.servers)-1:
-            self.selected_server -= 1
+        if len(self.controller.servers) == 0:
+            self.selecetd_server = 0 
+        else:
+            while self.selected_server > len(self.controller.servers)-1:
+                self.selected_server -= 1
 
         self.update_server_list()
 
-    def add_server(self, name, address):
-
-        pass
-
-    def open_server_info(self):
+    def open_server_info(self, method):
 
         if not self.server_info_open:
             self.server_info_open = True
-            self.server_info = ServerInfo(self, self.controller)
+            if not method:
+                self.server_info = AddServer(self, self.controller)
 
 
 class StyleSettings(tk.Toplevel):
@@ -635,22 +635,50 @@ class ServerInfo(tk.Toplevel):
         tk.Label(self.container, text="Server Name:", font=MEDIUM_FONT).grid(row=0, column=0, sticky="e")
         tk.Label(self.container, text="Server Address:", font=MEDIUM_FONT).grid(row=1, column=0, sticky="e")
 
-        self.name_entry = tk.Entry(self.container)
+        self.name_entry = tk.Entry(self.container, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
         self.name_entry.grid(row=0, column=1, sticky="w")
 
-        self.address_entry = tk.Entry(self.container)
+        self.address_entry = tk.Entry(self.container, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
         self.address_entry.grid(row=1, column=1, sticky="w")
 
-        self.add_button = tk.Button(self.container, text="Add")
+        self.add_button = tk.Button(self.container,
+                                    font=MEDIUM_FONT, bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR,
+                                    command=lambda: self.add_server(self.name_entry.get(), self.address_entry.get()))
         self.add_button.grid(row=2, column=0, ipady=10, sticky="ew")
 
-        self.cancel_button = tk.Button(self.container, text="Cancel")
+        self.cancel_button = tk.Button(self.container, text="Cancel",
+                                       font=MEDIUM_FONT, bg=BUTTON_COLOUR, activebackground=BUTTON_ACTIVE_COLOUR,
+                                       command=self.close)
         self.cancel_button.grid(row=2, column=1, ipady=10, sticky="ew")
-
+        
     def close(self):
 
         self.parent.server_info_open = False
         self.destroy()
+
+
+class AddServer(ServerInfo):
+
+    def __init__(self, parent, controller):
+
+        ServerInfo.__init__(self, parent, controller)
+
+        self.add_button.config(text="Add")
+
+    def add_server(self, name, address):
+
+        self.controller.servers.append([name, address])
+        self.parent.update_server_list()
+        self.close()
+
+
+class EditServer(ServerInfo):
+
+    def __init__(self, parent, controller):
+
+        ServerInfo.__init__(self, parent, controller)
+
+        self.add_button.config(text="Edit")
 
 
 app = Messenger()

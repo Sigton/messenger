@@ -641,6 +641,12 @@ class ServerInfo(tk.Toplevel):
         self.address_entry = tk.Entry(self.container)
         self.address_entry.grid(row=1, column=1)
 
+        self.add_button = tk.Button(self.container, text="Add")
+        self.add_button.grid(row=2, column=0)
+
+        self.cancel_button = tk.Button(self.container, text="Cancel")
+        self.cancel_button.grid(row=2, column=1)
+
     def close(self):
 
         self.parent.server_info_open = False

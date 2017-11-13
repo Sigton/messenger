@@ -618,7 +618,7 @@ class ServerInfo(tk.Toplevel):
         self.controller = controller
 
         self.wm_title("Server Info")
-        self.wm_geometry("200x150")
+        self.wm_geometry("400x200")
         self.protocol("WM_DELETE_WINDOW", self.close)
 
         self.resizable(False, False)
@@ -631,6 +631,15 @@ class ServerInfo(tk.Toplevel):
         self.container.grid_rowconfigure(2, weight=1)
         self.container.grid_columnconfigure(0, weight=1)
         self.container.grid_columnconfigure(1, weight=1)
+
+        tk.Label(self.container, text="Server Name:", font=MEDIUM_FONT).grid(row=0, column=0)
+        tk.Label(self.container, text="Server Address:", font=MEDIUM_FONT).grid(row=1, column=0)
+
+        self.name_entry = tk.Entry(self.container)
+        self.name_entry.grid(row=0, column=1)
+
+        self.address_entry = tk.Entry(self.container)
+        self.address_entry.grid(row=1, column=1)
 
     def close(self):
 

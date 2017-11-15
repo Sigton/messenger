@@ -24,6 +24,8 @@ class Messenger(tk.Tk):
         self.servers = []
         self.preference_file = None
 
+        self.name = "Messenger"
+
         self.tk_setPalette(background=BACKGROUND_COLOUR)
 
         tk.Tk.wm_title(self, "Woodpecker Messenger")
@@ -298,7 +300,7 @@ class MainPage(tk.Frame):
 
         n = 0
         for user in user_names:
-            self.online_users.insert(tk.END, "{} {}\n".format(user, "(Away)" if not users[n][1] else ""))
+            self.online_users.insert(tk.END, "{} {}\n".format(user, "(Away)" if not int(users[n][1]) else ""))
             n += 1
 
         self.online_users.config(state="disabled")
@@ -343,13 +345,15 @@ class MainPage(tk.Frame):
     def set_status_away(self, event):
 
         if event.widget == self.controller and self.controller.db is not None:
+            print("status away")
             self.controller.cursor.execute('''UPDATE users SET status = 0 WHERE nickname = ?''',
                                            (self.controller.username,))
             self.controller.db.commit()
 
     def set_status_here(self, event):
-
+        
         if event.widget == self.controller and self.controller.db is not None:
+            print("status here")
             self.controller.cursor.execute('''UPDATE users SET status = 1 WHERE nickname = ?''',
                                            (self.controller.username,))
             self.controller.db.commit()
@@ -525,7 +529,7 @@ class ServerSettings(tk.Toplevel):
             if not method:
                 self.server_info = AddServer(self, self.controller)
             else:
-                self.server_info = EditServer(self, self.controller)
+                self.server_info = EditServer(self, self.controller, self.selected_server)
 
     def edit_server(self):
 
@@ -684,11 +688,23 @@ class AddServer(ServerInfo):
 
 class EditServer(ServerInfo):
 
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller, server_id):
 
         ServerInfo.__init__(self, parent, controller)
 
-        self.add_button.config(text="Edit")
+        self.add_button.config(text="Edit",
+                               command=self.edit)
+
+        self.name_entry.insert(tk.END, self.controller.servers[server_id][0])
+        self.address_entry.insert(tk.END, self.controller.servers[server_id][1])
+
+        self.server_id = server_id
+
+    def edit(self):
+
+        self.controller.servers[self.server_id] = [self.name_entry.get(), self.address_entry.get()]
+        self.parent.update_server_list()
+        self.close()
 
 
 app = Messenger()

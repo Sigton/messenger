@@ -345,7 +345,6 @@ class MainPage(tk.Frame):
     def set_status_away(self, event):
 
         if event.widget == self.controller and self.controller.db is not None:
-            print("status away")
             self.controller.cursor.execute('''UPDATE users SET status = 0 WHERE nickname = ?''',
                                            (self.controller.username,))
             self.controller.db.commit()
@@ -353,7 +352,6 @@ class MainPage(tk.Frame):
     def set_status_here(self, event):
         
         if event.widget == self.controller and self.controller.db is not None:
-            print("status here")
             self.controller.cursor.execute('''UPDATE users SET status = 1 WHERE nickname = ?''',
                                            (self.controller.username,))
             self.controller.db.commit()

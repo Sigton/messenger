@@ -22,14 +22,14 @@ class Messenger(tk.Tk):
         
         self.username = ""
         self.servers = []
-        self.preference_file = None
+        self.preference_file = "//H023FILESRV01/OldPupilSHare/slamjam/messenger/defaultssave.json"
 
         self.name = "Messenger"
 
         self.tk_setPalette(background=BACKGROUND_COLOUR)
 
         tk.Tk.wm_title(self, "Woodpecker Messenger")
-        self.geometry('800x600')
+        self.geometry('480x360')
         self.resizable(False, False)
 
         self.container = tk.Frame(self)
@@ -58,8 +58,10 @@ class Messenger(tk.Tk):
 
     def connect_to_server(self, server_index):
 
+        #self.disconnect()
+
         if self.db is not None:
-            self.frames[MainPage].send_message(self.username + " has went offline.", False)
+            self.frames[MainPage].send_message("[-] " + self.username, False)
 
             self.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.username,))
 
@@ -74,7 +76,7 @@ class Messenger(tk.Tk):
     def disconnect(self):
 
         if self.db is not None:
-            self.frames[MainPage].send_message(self.username + " has went offline.", False)
+            self.frames[MainPage].send_message("[-] " + self.username, False)
 
             self.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.username,))
 
@@ -157,6 +159,8 @@ class MainPage(tk.Frame):
         self.style_settings_open = False
         self.preference_settings_open = False
 
+        # old gui
+        '''
         tk.Label(self, text="Woodpecker Messenger",
                  font=HEADING_FONT).grid(row=0, column=0, columnspan=3,
                                          pady=10, padx=20, sticky="nw")
@@ -189,6 +193,26 @@ class MainPage(tk.Frame):
 
         self.online_users = tk.Text(self, state="disabled", height=12, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
         self.online_users.grid(row=1, column=3, rowspan=4)
+        '''
+
+        # new gui
+        self.entry = tk.Text(self, height=2, width=59, bg=DARK_BACKGROUND_COLOUR, font=TEXTBOX_FONT)
+        self.entry.grid(row=2, column=0, columnspan=2, padx=5, sticky="ew")
+
+        self.send_button = tk.Button(self, text="\u279f", width=4,
+                                     command=lambda: self.send_message(self.entry.get("1.0", tk.END)),
+                                     bg=BUTTON_COLOUR, font=MEDIUM_FONT,
+                                     activebackground=BUTTON_ACTIVE_COLOUR)
+        self.send_button.grid(row=2, column=2, sticky="e", ipady=2, pady=3, padx=5)
+
+        self.display = tk.Text(self, height=18, width=63, state="disabled", bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
+        self.display.grid(row=1, column=0, columnspan=3, sticky="nsew", ipadx=13, ipady=5, padx=5)
+
+        self.online_users = tk.Text(self, height=3, width=40, state="disabled", bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
+        self.online_users.grid(row=0, column=1, columnspan=2, sticky="ew", pady=5, padx=5)
+
+        self.server_name = tk.Label(self, text="Woodpecker", font=HEADING_FONT, height=2, width=10)
+        self.server_name.grid(row=0, column=0)
 
         self.menu_bar = tk.Menu(self.controller)
 
@@ -198,9 +222,14 @@ class MainPage(tk.Frame):
         self.menu_bar.add_command(label="Styling", command=self.open_style_settings)
         self.menu_bar.add_command(label="Preferences", command=self.open_preference_settings)
 
+        self.display.tag_config("timestamp", foreground="#aaa")
+        self.display.tag_config("serverjoin", foreground="#43d35e")
+        self.display.tag_config("serverleave", foreground="#d26642")
+        self.online_users.tag_config("useraway", foreground="#d6951d")
+
     def setup(self):
 
-        self.controller.geometry('800x600')
+        self.controller.geometry('480x360')
         self.controller.bind("<Return>", lambda e: self.send_message(self.entry.get("1.0", tk.END)))
         self.controller.bind("<FocusIn>", self.set_status_here)
         self.controller.bind("<FocusOut>", self.set_status_away)
@@ -210,7 +239,7 @@ class MainPage(tk.Frame):
 
         self.controller.config(menu=self.menu_bar)
 
-        self.send_message(self.controller.username + " is now online.", False)
+        self.send_message("[+] " + self.controller.username, False)
 
         self.auto_refresh()
 
@@ -226,13 +255,11 @@ class MainPage(tk.Frame):
 
             return
 
-        if message.strip("\n") == "" or not self.can_send:
-            return
+        if prefix:
+            if message.strip("\n") == "" or not self.can_send:
+                return
 
         if len(message) > MESSAGE_LENGTH_THRESHOLD:
-            self.error_message.config(
-                text="Message is too long! Max of {} characters.".format(MESSAGE_LENGTH_THRESHOLD)
-            )
             self.entry.delete("1.0", tk.END)
 
             self.can_send = False
@@ -261,9 +288,8 @@ class MainPage(tk.Frame):
 
         self.entry.delete("1.0", tk.END)
 
-        if prefix:
-            self.can_send = False
-            self.controller.after(2000, self.allow_message)
+        self.can_send = False
+        self.controller.after(2000, self.allow_message)
 
     def refresh(self):
 
@@ -284,14 +310,29 @@ class MainPage(tk.Frame):
         self.display.delete('1.0', tk.END)
 
         for message in messages:
-            self.display.insert(tk.END,
-                                "{} {}: {}\n".format(message[0], message[1], message[2]) if message[3]
-                                else "{} {}\n".format(message[0], message[2]))
+
+            self.display.insert(tk.END, str(message[0]), ("timestamp",))
+
+            if message[3]:
+                self.display.insert(tk.END,
+                                    " {}: {}\n".format(message[1], message[2]))
+            else:
+                try:
+                    symbol, username = message[2].split(" ")
+                    if "+" in symbol:
+                        self.display.insert(tk.END, " {}".format(symbol), "serverjoin")
+                    else:
+                        self.display.insert(tk.END, " {}".format(symbol), "serverleave")
+                    self.display.insert(tk.END, " {}\n".format(username))
+                except:
+                    self.display.insert(tk.END, " {}\n".format(message[2]))
 
         self.display.config(state="disabled")
+        self.display.see(tk.END)
 
         self.online_users.config(state="normal")
         self.online_users.delete('1.0', tk.END)
+        self.online_users.insert(tk.END, "Online Users:\n")
 
         self.controller.cursor.execute('''SELECT nickname, status FROM users''')
         users = self.controller.cursor.fetchall()
@@ -300,7 +341,11 @@ class MainPage(tk.Frame):
 
         n = 0
         for user in user_names:
-            self.online_users.insert(tk.END, "{} {}\n".format(user, "(Away)" if not int(users[n][1]) else ""))
+            if bool(users[n][1]):
+                self.online_users.insert(tk.END, "{}".format(user))
+            else:
+                self.online_users.insert(tk.END, "{}".format(user), ("useraway",))
+            self.online_users.insert(tk.END, "{}".format(", " if len(users) > 1 and not n == len(users)-1 else ""))
             n += 1
 
         self.online_users.config(state="disabled")
@@ -322,7 +367,7 @@ class MainPage(tk.Frame):
     def logoff(self):
 
         if self.controller.db is not None:
-            self.send_message(self.controller.username + " has went offline.", False)
+            self.send_message("[-] " + self.controller.username, False)
 
             self.controller.cursor.execute('''DELETE FROM users WHERE nickname=?''', (self.controller.username,))
 
@@ -340,7 +385,6 @@ class MainPage(tk.Frame):
     def allow_message(self):
 
         self.can_send = True
-        self.error_message.config(text="")
 
     def set_status_away(self, event):
 
@@ -378,6 +422,7 @@ class MainPage(tk.Frame):
         try:
             with open(self.controller.preference_file, 'r') as infile:
                 data = json.load(infile)
+
 
             self.controller.servers = data["servers"]
         except Exception:

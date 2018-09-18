@@ -5,8 +5,10 @@ from tkinter import filedialog
 import datetime
 import sqlite3
 import json
+import random
 
 from settings import *
+from colour_loader import load_colours
 
 
 class Messenger(tk.Tk):
@@ -19,16 +21,19 @@ class Messenger(tk.Tk):
         self.cursor = None
 
         self.active_server = None
+
+        self.name_colours = load_colours()
         
         self.username = ""
-        self.servers = []
-        self.preference_file = "//H023FILESRV01/OldPupilSHare/slamjam/messenger/defaultssave.json"
+        self.servers = [["general", "//h023filesrv01/OldPupilSHare/gamersquad/wpservers/general.db"],
+                        ["development", "//h023filesrv01/OldPupilSHare/gamersquad/wpservers/dev.db"]]
+        self.preference_file = "//h023filesrv01/OldPupilSHare/gamersquad/preferences.json"
 
         self.name = "Messenger"
 
         self.tk_setPalette(background=BACKGROUND_COLOUR)
 
-        tk.Tk.wm_title(self, "Woodpecker Messenger")
+        tk.Tk.wm_title(self, "Woodpecker Blue")
         self.geometry('480x360')
         self.resizable(False, False)
 
@@ -159,43 +164,6 @@ class MainPage(tk.Frame):
         self.style_settings_open = False
         self.preference_settings_open = False
 
-        # old gui
-        '''
-        tk.Label(self, text="Woodpecker Messenger",
-                 font=HEADING_FONT).grid(row=0, column=0, columnspan=3,
-                                         pady=10, padx=20, sticky="nw")
-        tk.Label(self, text="Online Users:",
-                 font=HEADING_FONT).grid(row=0, column=3,
-                                         pady=10, sticky="nw")
-        tk.Label(self, text="v0.8.0",
-                 font=MEDIUM_FONT, fg=DARK_TEXT_COLOUR).grid(row=6, column=0, sticky="nw", pady=10, padx=20)
-
-        self.error_message = tk.Label(self, text="",
-                                      font=MEDIUM_FONT, fg=ERROR_COLOUR)
-        self.error_message.grid(row=3, column=0, sticky="w", padx=20)
-
-        self.entry = tk.Text(self, width=50, height=2, bg=DARK_BACKGROUND_COLOUR, font=TEXTBOX_FONT)
-        self.entry.grid(row=1, column=0, columnspan=2, rowspan=2, sticky="w", padx=10, ipady=30)
-
-        self.send_button = tk.Button(self, text="Send",
-                                     command=lambda: self.send_message(self.entry.get("1.0", tk.END)),
-                                     width=10, bg=BUTTON_COLOUR, font=MEDIUM_FONT,
-                                     activebackground=BUTTON_ACTIVE_COLOUR)
-        self.send_button.grid(row=1, column=2, sticky="w", ipady=10, padx=5)
-
-        self.refresh_button = tk.Button(self, text="Refresh", command=self.refresh,
-                                        width=10, bg=BUTTON_COLOUR, font=MEDIUM_FONT,
-                                        activebackground=BUTTON_ACTIVE_COLOUR)
-        self.refresh_button.grid(row=2, column=2, sticky="w", ipady=10, padx=5)
-
-        self.display = tk.Text(self, state="disabled", width=100, height=25, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
-        self.display.grid(row=5, column=0, columnspan=4, sticky="nsew")
-
-        self.online_users = tk.Text(self, state="disabled", height=12, bg=TEXTBOX_COLOUR, font=TEXTBOX_FONT)
-        self.online_users.grid(row=1, column=3, rowspan=4)
-        '''
-
-        # new gui
         self.entry = tk.Text(self, height=2, width=59, bg=DARK_BACKGROUND_COLOUR, font=TEXTBOX_FONT)
         self.entry.grid(row=2, column=0, columnspan=2, padx=5, sticky="ew")
 
@@ -225,7 +193,10 @@ class MainPage(tk.Frame):
         self.display.tag_config("timestamp", foreground="#aaa")
         self.display.tag_config("serverjoin", foreground="#43d35e")
         self.display.tag_config("serverleave", foreground="#d26642")
+        [self.display.tag_config("username{}".format(n), foreground=self.controller.name_colours[n]) for n in range(len(self.controller.name_colours))]
         self.online_users.tag_config("useraway", foreground="#d6951d")
+
+        self.name_colour = random.randint(1,len(self.controller.name_colours))
 
     def setup(self):
 
@@ -278,10 +249,10 @@ class MainPage(tk.Frame):
         if len(seconds) == 1:
             seconds = "0" + seconds
 
-        self.controller.cursor.execute('''INSERT INTO messages(time, name, message, prefix)
-                                                  VALUES(?,?,?,?)''',
+        self.controller.cursor.execute('''INSERT INTO messages(time, name, message, prefix, colour)
+                                                  VALUES(?,?,?,?,?)''',
                                        ("<{}:{}:{}>".format(hours, minutes, seconds),
-                                        self.controller.username, message, prefix))
+                                        self.controller.username, message, prefix, str(self.name_colour)))
         self.controller.db.commit()
 
         self.refresh()
@@ -303,7 +274,10 @@ class MainPage(tk.Frame):
 
             return
 
-        self.controller.cursor.execute('''SELECT time, name, message, prefix FROM messages''')
+        serv_name = self.controller.servers[self.controller.active_server][0]
+        self.server_name.config(text="{}{}".format(serv_name[0].upper(), serv_name[1:]))
+
+        self.controller.cursor.execute('''SELECT time, name, message, prefix, colour FROM messages''')
         messages = self.controller.cursor.fetchall()[-20:]
 
         self.display.config(state="normal")
@@ -314,8 +288,8 @@ class MainPage(tk.Frame):
             self.display.insert(tk.END, str(message[0]), ("timestamp",))
 
             if message[3]:
-                self.display.insert(tk.END,
-                                    " {}: {}\n".format(message[1], message[2]))
+                self.display.insert(tk.END, " {}".format(message[1]), ("username{}".format(self.controller.name_colours[int(message[4])])))
+                self.display.insert(tk.END, ": {}\n".format(message[2]))
             else:
                 try:
                     symbol, username = message[2].split(" ")

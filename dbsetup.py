@@ -2,7 +2,7 @@ import sqlite3
 
 # "//H023FILESRV01/OldPupilSHare/slamjam/messenger/defaultserver.db")
 
-db = sqlite3.connect("//H023FILESRV01/OldPupilSHare/slamjam/messenger/servers/computing.db")
+db = sqlite3.connect("//h023filesrv01/OldPupilSHare/gamersquad/wpservers/general.db")
 
 cursor = db.cursor()
 
@@ -17,7 +17,7 @@ except:
     pass
 
 cursor.execute("""
-    CREATE TABLE messages(id INTEGER PRIMARY KEY, time TEXT, name TEXT, message TEXT, prefix INTEGER)
+    CREATE TABLE messages(id INTEGER PRIMARY KEY, time TEXT, name TEXT, message TEXT, prefix INTEGER, colour TEXT)
 """)
 
 cursor.execute("""

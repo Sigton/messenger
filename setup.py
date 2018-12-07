@@ -1,9 +1,9 @@
 import cx_Freeze
 
-executables = [cx_Freeze.Executable(script="main.py",
+executables = [cx_Freeze.Executable(script="src/main.py",
                                     targetName="ghsm.exe")]
 
-include_files = ["\\H023FILESRV01\OldPupilSHare\slamjam\messenger\settings.py"]
+include_files = ["src"]
 
 cx_Freeze.setup(
     name="GHSM",

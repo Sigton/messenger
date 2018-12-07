@@ -1,1 +1,29 @@
-
+#0FF880 Nice Lime Green
+#D8AED3 Pink Cotton Candy
+#0080F0 Nice Ocean Blue
+#8000FF Dark Purple
+#8F0888 Slightly Pink Dark Purple
+#DAA520 Gold
+#F00888 Hot Pink
+#FFA5A5 Light Red
+#FFFFC2 Light Yellow
+#C8E7ED Light Blue
+#BFCFFF Darker Light Blue
+#88BEF5 Sky Blue
+#BA53DE Light Purple
+#F469A9 Pinkish Red
+#F4FA9C Light Yellow
+#A836AD Purple
+#F16896 Pink
+#4531B1 Dark Purple
+#D32D2D Red
+#214177 Ocean Blue
+#FF5722 Pumpkin Orange
+#C22828 Calm Red
+#8A0F0F Dark Calm Red
+#B4F1F1 Ice Blue
+#684184 Royal Purple
+#9182C4 Light Royal Purple
+#E35454 Flame Red
+#15EDA3 Turquoise
+#FFF200 Electric Yellow

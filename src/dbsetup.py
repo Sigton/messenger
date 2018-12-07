@@ -1,10 +1,6 @@
 import sqlite3
 
-# "//H023FILESRV01/OldPupilSHare/slamjam/messenger/defaultserver.db")
-
-#commented out to avoid accidentally running
-'''
-db = sqlite3.connect("//h023filesrv01/OldPupilSHare/gamersquad/wpservers/general.db")
+db = sqlite3.connect("//h023filesrv01/OldPupilSHare/New folder/thumbs.db")
 
 cursor = db.cursor()
 
@@ -30,4 +26,3 @@ db.commit()
 
 
 db.close()
-'''

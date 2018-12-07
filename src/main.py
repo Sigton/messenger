@@ -7,8 +7,8 @@ import sqlite3
 import json
 import random
 
-from settings import *
-from colour_loader import load_colours
+from src.settings import *
+from src.colour_loader import load_colours
 
 
 class Messenger(tk.Tk):
